@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ebe6df"/>
+      <stop offset="1" stop-color="#d3ccc2"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <g fill="#c2b9ad">
+    <circle cx="350" cy="250" r="48"/>
+    <path d="M262 420c0-62 40-104 88-104s88 42 88 104z"/>
+    <circle cx="456" cy="262" r="42"/>
+    <path d="M380 420c4-56 36-92 76-92s76 36 80 92z"/>
+  </g>
+  <text x="400" y="490" text-anchor="middle" font-family="Georgia, serif" font-size="26" letter-spacing="4" fill="#9c9387">TU FOTO AQUÍ</text>
+</svg>

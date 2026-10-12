@@ -1,0 +1,350 @@
+{
+ "proveedores": {
+  "p01": {
+   "nombre": "Mirna",
+   "total": 20500,
+   "padrino": "M&C",
+   "presupuesto": 20500,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 1
+  },
+  "p02": {
+   "nombre": "Toño Sonido",
+   "total": 25000,
+   "padrino": "M&C",
+   "presupuesto": 25000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 2
+  },
+  "p03": {
+   "nombre": "Vestido",
+   "total": 20000,
+   "padrino": "M&C",
+   "presupuesto": 20000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 3
+  },
+  "p04": {
+   "nombre": "Decorador Alejandro",
+   "total": 26000,
+   "padrino": "Carmelita",
+   "presupuesto": 39326,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 4
+  },
+  "p05": {
+   "nombre": "Centros de C&M",
+   "total": 6000,
+   "padrino": "M&C",
+   "presupuesto": 7000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 5
+  },
+  "p06": {
+   "nombre": "Pastel Chavarin",
+   "total": 4800,
+   "padrino": "July",
+   "presupuesto": 9500,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 6
+  },
+  "p07": {
+   "nombre": "Banda",
+   "total": 60000,
+   "padrino": "Secretarios",
+   "presupuesto": 60000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 7
+  },
+  "p08": {
+   "nombre": "Postresitos Chavarin",
+   "total": 18000,
+   "padrino": "Jhoana",
+   "presupuesto": 20250,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 8
+  },
+  "p09": {
+   "nombre": "Local",
+   "total": 25000,
+   "padrino": "Glenda",
+   "presupuesto": 25000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 9
+  },
+  "p10": {
+   "nombre": "Muebles",
+   "total": 22000,
+   "padrino": "Marcella",
+   "presupuesto": 22000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 10
+  },
+  "p11": {
+   "nombre": "Fotógrafo",
+   "total": 17900,
+   "padrino": "Cesar",
+   "presupuesto": 20900,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 11
+  },
+  "p12": {
+   "nombre": "Cerveza",
+   "total": 20000,
+   "padrino": "Emili",
+   "presupuesto": 20000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 12
+  },
+  "p13": {
+   "nombre": "Tequila",
+   "total": 0,
+   "padrino": "Maribel",
+   "presupuesto": 0,
+   "consigue": "ellos",
+   "descripcion": "",
+   "orden": 13
+  },
+  "p14": {
+   "nombre": "Comida",
+   "total": 0,
+   "padrino": "Juan",
+   "presupuesto": 0,
+   "consigue": "ellos",
+   "descripcion": "",
+   "orden": 14
+  },
+  "p15": {
+   "nombre": "Biblia y rosario",
+   "total": 1500,
+   "padrino": "Sammy",
+   "presupuesto": 1500,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 15
+  },
+  "p16": {
+   "nombre": "Anillos",
+   "total": 0,
+   "padrino": "Angelica",
+   "presupuesto": 0,
+   "consigue": "ellos",
+   "descripcion": "",
+   "orden": 16
+  },
+  "p17": {
+   "nombre": "Violín",
+   "total": 3000,
+   "padrino": "Ana y Felipe",
+   "presupuesto": 6500,
+   "consigue": "novios",
+   "descripcion": "El sobrante del dinero se destina al mariachi",
+   "orden": 17
+  },
+  "p18": {
+   "nombre": "Mariachi",
+   "total": 9000,
+   "padrino": "Rafa",
+   "presupuesto": 6500,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 18
+  },
+  "p19": {
+   "nombre": "Invitación",
+   "total": 1500,
+   "padrino": "Paulina",
+   "presupuesto": 3000,
+   "consigue": "novios",
+   "descripcion": "",
+   "orden": 19
+  },
+  "p20": {
+   "nombre": "Hielo",
+   "total": 1300,
+   "padrino": "Rosy y Carlos",
+   "presupuesto": 1400,
+   "consigue": "novios",
+   "descripcion": "25 bolsas de hielo y 10 barras",
+   "orden": 20
+  }
+ },
+ "pagos": {
+  "p01-anticipo": {
+   "proveedor": "p01",
+   "monto": 6150,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p04-anticipo": {
+   "proveedor": "p04",
+   "monto": 13000,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p05-anticipo": {
+   "proveedor": "p05",
+   "monto": 6000,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p06-anticipo": {
+   "proveedor": "p06",
+   "monto": 1000,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p07-anticipo": {
+   "proveedor": "p07",
+   "monto": 20000,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p08-anticipo": {
+   "proveedor": "p08",
+   "monto": 2500,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p09-anticipo": {
+   "proveedor": "p09",
+   "monto": 5000,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p10-anticipo": {
+   "proveedor": "p10",
+   "monto": 7500,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p11-anticipo": {
+   "proveedor": "p11",
+   "monto": 3000,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  },
+  "p17-anticipo": {
+   "proveedor": "p17",
+   "monto": 500,
+   "fecha": "",
+   "nota": "Anticipo",
+   "creado": 0
+  }
+ },
+ "aportes": {
+  "p01-inicial": {
+   "proveedor": "p01",
+   "monto": 6150,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p04-inicial": {
+   "proveedor": "p04",
+   "monto": 39326,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p05-inicial": {
+   "proveedor": "p05",
+   "monto": 6000,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p08-inicial": {
+   "proveedor": "p08",
+   "monto": 4057,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p09-inicial": {
+   "proveedor": "p09",
+   "monto": 17024,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p10-inicial": {
+   "proveedor": "p10",
+   "monto": 3000,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p11-inicial": {
+   "proveedor": "p11",
+   "monto": 4000,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p17-inicial": {
+   "proveedor": "p17",
+   "monto": 3000,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  },
+  "p19-inicial": {
+   "proveedor": "p19",
+   "monto": 3000,
+   "fecha": "",
+   "nota": "Abonos anteriores",
+   "creado": 0
+  }
+ },
+ "cotizaciones": {
+  "p12-c1": {
+   "proveedor": "p12",
+   "opcion": "Modelo",
+   "precio": 430,
+   "piezas": 24,
+   "cantidad": 0,
+   "elegida": false,
+   "creado": 1
+  },
+  "p12-c2": {
+   "proveedor": "p12",
+   "opcion": "Barrilito",
+   "precio": 245,
+   "piezas": 24,
+   "cantidad": 0,
+   "elegida": false,
+   "creado": 2
+  },
+  "p12-c3": {
+   "proveedor": "p12",
+   "opcion": "Corona",
+   "precio": 375,
+   "piezas": 24,
+   "cantidad": 0,
+   "elegida": false,
+   "creado": 3
+  }
+ }
+}

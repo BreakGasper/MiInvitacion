@@ -1,0 +1,18 @@
+# Dependencias y cachés
+node_modules/
+__pycache__/
+.firebase/
+*.log
+
+# Restos de un "firebase init" que no usa la invitación
+functions/
+dataconnect/
+src/
+package.json
+package-lock.json
+/n
+/y
+
+# Versiones de la canción que ya no se usan (la que suena es mmxx-instrumental-suave.mp3)
+musica/*
+!musica/mmxx-instrumental-suave.mp3

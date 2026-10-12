@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel · Boda Carlos &amp; Monse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/panel.css?v=23">
+</head>
+<body>
+  <header class="barra">
+    <div>
+      <p class="barra-k">Invitados por familia</p>
+      <h1 class="barra-t">Carlos &amp; Monse</h1>
+    </div>
+    <div class="barra-der" id="usuario" hidden>
+      <span id="usuario-correo"></span>
+      <button type="button" class="b b-sec" id="salir"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
+    </div>
+  </header>
+
+  <!-- Inicio de sesión -->
+  <section class="caja centrada" id="vista-login" hidden>
+    <i class="fa-solid fa-lock ico-grande"></i>
+    <h2>Solo para los novios</h2>
+    <p>Entra con tu número de teléfono y tu contraseña.</p>
+    <form id="form-login" class="login" novalidate>
+      <label>Teléfono
+        <input name="telefono" type="tel" inputmode="numeric" autocomplete="username" placeholder="10 dígitos" required>
+      </label>
+      <label>Contraseña
+        <input name="clave" type="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit" class="b b-pri" id="entrar"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+    </form>
+    <p class="aviso" id="login-error" role="alert"></p>
+  </section>
+
+  <section class="caja centrada" id="vista-cargando">
+    <i class="fa-solid fa-spinner fa-spin ico-grande"></i>
+    <p>Cargando…</p>
+  </section>
+
+  <!-- Panel -->
+  <main id="vista-panel" hidden>
+    <nav class="pestanas" id="pestanas" aria-label="Secciones">
+      <button type="button" class="pestana activo" data-modo="pases"><i class="fa-solid fa-envelope-open-text"></i> Familias</button>
+      <button type="button" class="pestana" data-modo="mesas"><i class="fa-solid fa-chair"></i> Mesas</button>
+      <button type="button" class="pestana" data-modo="gastos"><i class="fa-solid fa-sack-dollar"></i> Gastos</button>
+      <button type="button" class="pestana" data-modo="calc"><i class="fa-solid fa-calculator"></i> Calcular</button>
+    </nav>
+
+    <!-- ============ CALCULADORA: lista de compras contra el efectivo disponible ============ -->
+    <div data-solo="calc" id="vista-calc" hidden>
+      <section class="resumen" id="calc-resumen"></section>
+      <section class="caja">
+        <div class="mesas-barra">
+          <h2 class="caja-t">Calculadora de compras</h2>
+          <div class="acciones">
+            <button type="button" class="b b-pri" id="calc-editar" hidden><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+            <button type="button" class="b b-pri" id="calc-guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar cotización</button>
+            <button type="button" class="b b-sec" id="calc-cancelar-ed" hidden><i class="fa-solid fa-xmark"></i> Cancelar edición</button>
+            <button type="button" class="b b-sec" id="calc-nueva-cot"><i class="fa-solid fa-file-circle-plus"></i> Nueva</button>
+            <button type="button" class="b b-wsp" id="calc-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+            <button type="button" class="b b-sec" id="calc-excel"><i class="fa-solid fa-file-excel"></i> Excel</button>
+          </div>
+        </div>
+        <p class="calc-estado" id="calc-estado"></p>
+        <label class="calc-disp">Efectivo disponible $
+          <input id="calc-disponible" type="number" min="0" step="0.01" inputmode="decimal" placeholder="¿Cuánto tienes?">
+        </label>
+        <div class="calc-fila calc-cab" aria-hidden="true">
+          <span></span><span>Cosa</span><span>Cantidad</span><span>Precio c/u</span><span>Subtotal</span><span></span>
+        </div>
+        <div id="calc-filas"></div>
+        <form class="calc-fila calc-nueva" id="calc-nuevo">
+          <span class="c-mas"><i class="fa-solid fa-plus"></i></span>
+          <input name="concepto" class="c-concepto" maxlength="80" placeholder="Cosa (ej. Refrescos)" aria-label="Cosa">
+          <input name="cantidad" class="c-num" type="number" min="0" step="any" inputmode="decimal" placeholder="Cant." aria-label="Cantidad">
+          <input name="precio" class="c-num" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Precio $" aria-label="Precio por pieza">
+          <button type="submit" class="b b-pri c-agregar"><i class="fa-solid fa-plus"></i> Agregar</button>
+        </form>
+        <div class="calc-total" id="calc-total"></div>
+      </section>
+      <section class="caja">
+        <h2 class="caja-t">Cotizaciones guardadas</h2>
+        <p class="ayuda">Ábrela para verla o seguir editándola. Al guardar con el mismo nombre se actualiza; con otro nombre se guarda como una nueva.</p>
+        <div class="unir-barra">
+          <span id="calc-unir-txt"></span>
+          <button type="button" class="b b-pri" id="calc-unir" disabled><i class="fa-solid fa-object-group"></i> Unir seleccionadas</button>
+        </div>
+        <div class="lista" id="calc-guardadas"></div>
+      </section>
+    </div>
+
+    <!-- ============ GASTOS: proveedores, padrinos y cotizaciones ============ -->
+    <div data-solo="gastos" hidden>
+      <section class="resumen" id="gastos-resumen"></section>
+      <section class="caja">
+        <div class="herramientas">
+          <div class="buscar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="gastos-buscar" placeholder="Buscar proveedor o padrino…" aria-label="Buscar proveedor">
+          </div>
+          <div class="filtros" id="gastos-filtros" role="tablist">
+            <button type="button" class="chip activo" data-gf="todos">Todos</button>
+            <button type="button" class="chip" data-gf="porpagar">Falta pagar</button>
+            <button type="button" class="chip" data-gf="pagados">Pagados</button>
+            <button type="button" class="chip" data-gf="porrecibir">Falta que nos den</button>
+            <button type="button" class="chip" data-gf="noalcanza">No alcanza</button>
+            <button type="button" class="chip" data-gf="ellos">Lo consigue el padrino</button>
+          </div>
+          <div class="acciones">
+            <span class="filtros" id="gastos-vista">
+              <button type="button" class="chip activo" data-gv="tarjetas"><i class="fa-solid fa-grip"></i> Tarjetas</button>
+              <button type="button" class="chip" data-gv="tabla"><i class="fa-solid fa-table"></i> Tabla</button>
+            </span>
+            <button type="button" class="b b-pri" id="btn-nuevo-gasto"><i class="fa-solid fa-plus"></i> Nuevo proveedor</button>
+            <button type="button" class="b b-sec" id="exportar-gastos"><i class="fa-solid fa-file-excel"></i> Excel</button>
+          </div>
+        </div>
+        <p class="conteo" id="gastos-conteo"></p>
+        <div class="lista" id="gastos-lista"></div>
+      </section>
+    </div>
+
+    <section class="resumen" id="resumen" data-solo="pases"></section>
+
+    <section class="caja" data-solo="pases">
+      <div class="herramientas">
+        <div class="buscar">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" id="buscar" placeholder="Buscar familia o integrante…" aria-label="Buscar">
+        </div>
+        <div class="filtros" id="filtros-gen" data-solo="gen" role="tablist" hidden>
+          <button type="button" class="chip activo" data-g="todos">Todos</button>
+          <button type="button" class="chip" data-g="si">Asistirán</button>
+          <button type="button" class="chip" data-g="no">No asistirán</button>
+          <button type="button" class="chip" data-g="admin">Agregados por mí</button>
+        </div>
+        <div class="filtros" id="filtros" data-solo="pases" role="tablist">
+          <button type="button" class="chip activo" data-f="todos">Todos</button>
+          <button type="button" class="chip" data-f="si">Asistirán</button>
+          <button type="button" class="chip" data-f="no">No asistirán</button>
+          <button type="button" class="chip" data-f="pend">Sin respuesta</button>
+          <button type="button" class="chip" data-f="noenv">Sin enviar</button>
+          <button type="button" class="chip" data-f="rev">Por revisar</button>
+        </div>
+        <div class="acciones">
+          <button type="button" class="b b-pri" id="nuevo-general" data-solo="gen" hidden><i class="fa-solid fa-user-plus"></i> Agregar registro</button>
+          <button type="button" class="b b-wsp" id="compartir-general" data-solo="gen" hidden><i class="fa-brands fa-whatsapp"></i> Compartir invitación</button>
+          <button type="button" class="b b-pri" id="nuevo" data-solo="pases"><i class="fa-solid fa-plus"></i> Nueva familia</button>
+          <button type="button" class="b b-sec" id="ver-mesas" data-solo="pases"><i class="fa-solid fa-table-cells"></i> Por mesa</button>
+          <button type="button" class="b b-sec" id="exportar"><i class="fa-solid fa-file-excel"></i> Descargar Excel</button>
+        </div>
+      </div>
+      <p class="conteo" id="conteo"></p>
+      <div class="lista" id="lista"></div>
+    </section>
+
+    <!-- ============ MESAS (independiente de las invitaciones) ============ -->
+    <div data-solo="mesas" hidden>
+      <section class="resumen" id="mesas-resumen"></section>
+
+      <section class="caja">
+        <div class="mesas-barra">
+          <h2 class="caja-t">Salón</h2>
+          <div class="acciones">
+            <button type="button" class="b b-sec" id="btn-mover"><i class="fa-solid fa-up-down-left-right"></i> Mover y acomodar</button>
+            <button type="button" class="b b-sec" id="btn-nuevo-elem"><i class="fa-solid fa-shapes"></i> Agregar elemento</button>
+            <select id="nueva-mesa-tipo" aria-label="Tipo de mesa nueva">
+              <option value="cuad">Cuadrada</option>
+              <option value="red">Redonda</option>
+              <option value="rect">Rectangular</option>
+            </select>
+            <button type="button" class="b b-pri" id="btn-nueva-mesa"><i class="fa-solid fa-plus"></i> Agregar mesa</button>
+            <button type="button" class="b b-sec" id="exportar-mesas"><i class="fa-solid fa-file-excel"></i> Excel de mesas</button>
+          </div>
+        </div>
+        <p class="ayuda">Toca una mesa para ver y editar a sus invitados, o un elemento (pista, baños…) para renombrarlo.
+          Con <b>Mover y acomodar</b> arrastra mesas y elementos; la esquina de cada elemento cambia su tamaño.</p>
+        <div class="salon-scroll">
+          <div class="salon" id="salon">
+            <div class="salon-area" id="salon-area">
+              <div id="salon-elementos"></div>
+              <div class="salon-mesas" id="salon-mesas"></div>
+            </div>
+          </div>
+        </div>
+        <div class="leyenda">
+          <span><span class="silla ocupada"></span> Lugar ocupado</span>
+          <span><span class="silla"></span> Lugar libre</span>
+          <span><span class="mini llena-de-mas"></span> Pasó su capacidad</span>
+        </div>
+        <div id="mesas-tipos"></div>
+      </section>
+
+      <section class="caja">
+        <h2 class="caja-t">Invitados por mesa</h2>
+        <form class="ac-nuevo" id="form-acomodo-nuevo">
+          <input name="nombre" maxlength="80" placeholder="Nombre del invitado" aria-label="Nombre del invitado">
+          <select name="mesa" aria-label="Mesa"></select>
+          <button type="submit" class="b b-pri"><i class="fa-solid fa-user-plus"></i> Agregar</button>
+        </form>
+        <div class="herramientas-mesas">
+          <div class="buscar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="acomodo-buscar" placeholder="Buscar invitado o mesa…" aria-label="Buscar invitado">
+          </div>
+          <label class="check"><input type="checkbox" id="acomodo-sin-mesa"> Solo sin mesa</label>
+        </div>
+        <p class="conteo" id="acomodo-conteo"></p>
+        <div class="acomodo-lista" id="acomodo-lista"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Ventana de un elemento del salón -->
+  <dialog id="dlg-elem">
+    <form id="form-elem">
+      <h2>Elemento del salón</h2>
+      <label>Nombre <input name="nombre" maxlength="40" required></label>
+      <label>Color <input name="color" type="color"></label>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec" id="eliminar-elem"><i class="fa-solid fa-trash"></i> Quitar</button>
+        <button type="button" class="b b-sec" id="cerrar-elem">Cancelar</button>
+        <button type="submit" class="b b-pri">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Ventana de una mesa -->
+  <dialog id="dlg-mesa">
+    <h2 id="dlg-mesa-t">Mesa</h2>
+    <form id="form-mesa" class="form-mesa">
+      <label>Número <input name="numero" type="number" min="1" max="200"></label>
+      <label>Tipo
+        <select name="tipo">
+          <option value="rect">Rectangular</option>
+          <option value="cuad">Cuadrada</option>
+          <option value="red">Redonda</option>
+        </select>
+      </label>
+      <label>Capacidad <input name="capacidad" type="number" min="1" max="30"></label>
+      <label class="check girar"><input type="checkbox" name="girada"> Girar (vertical)</label>
+      <button type="submit" class="b b-sec">Guardar mesa</button>
+    </form>
+    <div class="mesa-invitados" id="mesa-invitados"></div>
+    <select id="mesa-sin" aria-label="Agregar invitado sin mesa"></select>
+    <form id="form-mesa-nuevo" class="ac-nuevo">
+      <input name="nombre" maxlength="80" placeholder="O escribe un invitado nuevo" aria-label="Invitado nuevo">
+      <button type="submit" class="b b-pri"><i class="fa-solid fa-plus"></i></button>
+    </form>
+    <div class="dlg-botones">
+      <button type="button" class="b b-sec" id="eliminar-mesa"><i class="fa-solid fa-trash"></i> Eliminar mesa</button>
+      <button type="button" class="b b-pri" id="cerrar-mesa">Listo</button>
+    </div>
+  </dialog>
+
+  <!-- Editar / nuevo pase -->
+  <dialog id="dlg-pase">
+    <form method="dialog" id="form-pase">
+      <h2 id="dlg-titulo">Editar familia</h2>
+      <label>Nombre que aparece en el pase
+        <input name="nombre" required maxlength="120" placeholder="Ej. Familia Pérez López">
+      </label>
+      <div class="dos">
+        <label>Lugares <small id="lugares-auto">(se calcula con la lista)</small>
+          <input name="personas" type="number" min="1" max="30" required>
+        </label>
+        <label>Mesa (opcional)
+          <input name="mesa" type="number" min="0" max="200">
+        </label>
+      </div>
+      <div class="integrantes">
+        <div class="integrantes-t">Integrantes <small>(marca quiénes están invitados)</small></div>
+        <div id="lista-integrantes"></div>
+        <button type="button" class="b b-sec" id="agregar-integrante"><i class="fa-solid fa-user-plus"></i> Agregar integrante</button>
+      </div>
+      <label>Mensaje personal (lo ve el invitado)
+        <textarea name="mensaje" rows="2" maxlength="300"></textarea>
+      </label>
+      <label>Nota interna (solo para ti)
+        <input name="nota" maxlength="200">
+      </label>
+      <label>Estado del pase
+        <select name="estado">
+          <option>Habilitado</option>
+          <option>Cancelado</option>
+        </select>
+      </label>
+      <p class="aviso" id="pase-error" role="alert"></p>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec" id="cancelar-pase">Cancelar</button>
+        <button type="submit" class="b b-pri">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Agregar / editar registro de la invitación general -->
+  <dialog id="dlg-general">
+    <form method="dialog" id="form-general" novalidate>
+      <h2 id="dlg-general-titulo">Agregar registro</h2>
+      <label>Nombre (o el de la familia)
+        <input name="nombre" required maxlength="120">
+      </label>
+      <label>Teléfono (10 dígitos)
+        <input name="telefono" type="tel" inputmode="numeric" required maxlength="14" placeholder="3751234567">
+      </label>
+      <div class="dos">
+        <label>¿Asistirá?
+          <select name="asistencia">
+            <option value="si">Sí asistirá</option>
+            <option value="no">No asistirá</option>
+          </select>
+        </label>
+        <label>Personas
+          <input name="confirmados" type="number" min="1" max="20" value="1" required>
+        </label>
+      </div>
+      <label id="g-asistentes">Nombre de quienes asistirán (separados por coma)
+        <textarea name="asistentes" rows="2" maxlength="1000"></textarea>
+      </label>
+      <label>Mensaje para los novios (opcional)
+        <textarea name="comentario" rows="2" maxlength="500"></textarea>
+      </label>
+      <p class="aviso" id="general-error" role="alert"></p>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec" id="cancelar-general">Cancelar</button>
+        <button type="submit" class="b b-pri">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Resumen por mesa -->
+  <dialog id="dlg-mesas">
+    <h2>Resumen por mesa</h2>
+    <div id="tabla-mesas"></div>
+    <div class="dlg-botones"><button type="button" class="b b-pri" id="cerrar-mesas">Cerrar</button></div>
+  </dialog>
+
+  <!-- Proveedor: datos, pagos, abonos del padrino y cotizaciones -->
+  <dialog id="dlg-gasto" class="ancho">
+    <form id="form-gasto">
+      <h2 id="dlg-gasto-t">Proveedor</h2>
+      <label>Proveedor <input name="nombre" maxlength="80" required></label>
+      <div class="dos">
+        <label>Costo total $ <input name="total" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label>Padrino <input name="padrino" maxlength="80"></label>
+      </div>
+      <div class="dos">
+        <label>Lo que ofreció el padrino $ <input name="presupuesto" type="number" min="0" step="0.01" inputmode="decimal"></label>
+        <label>¿Quién lo consigue?
+          <select name="consigue">
+            <option value="novios">Los novios</option>
+            <option value="ellos">El padrino</option>
+          </select>
+        </label>
+      </div>
+      <label>Descripción <textarea name="descripcion" rows="2" maxlength="300"></textarea></label>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec" id="eliminar-gasto"><i class="fa-solid fa-trash"></i> Eliminar</button>
+        <button type="button" class="b b-sec" id="cerrar-gasto">Cerrar</button>
+        <button type="submit" class="b b-pri">Guardar</button>
+      </div>
+    </form>
+    <div id="gasto-detalle"></div>
+  </dialog>
+
+  <!-- Pago o abono rápido -->
+  <!-- Recibo de la cotización por WhatsApp -->
+  <dialog id="dlg-recibo" class="ancho">
+    <form id="form-recibo">
+      <h2><i class="fa-brands fa-whatsapp"></i> Enviar recibo</h2>
+      <label>Teléfono (opcional) <input name="telefono" type="tel" inputmode="numeric" maxlength="14" placeholder="10 dígitos · si lo dejas vacío eliges el contacto en WhatsApp"></label>
+      <label>Mensaje (opcional) <textarea name="mensaje" rows="2" maxlength="300" placeholder="Ej. Hola, te comparto la cotización"></textarea></label>
+      <label class="check"><input type="checkbox" name="efectivo"> Incluir mi efectivo disponible y cuánto sobra o falta</label>
+      <p class="integrantes-t">Así se verá:</p>
+      <pre class="recibo-vista" id="recibo-vista"></pre>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec" id="cerrar-recibo">Cancelar</button>
+        <button type="button" class="b b-sec" id="recibo-imagen"><i class="fa-solid fa-image"></i> Enviar como imagen</button>
+        <button type="submit" class="b b-wsp"><i class="fa-brands fa-whatsapp"></i> Enviar texto</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-abono">
+    <form id="form-abono">
+      <h2 id="dlg-abono-t">Abono</h2>
+      <p class="ayuda" id="dlg-abono-info"></p>
+      <div class="dos">
+        <label>Monto $ <input name="monto" type="number" min="0.01" step="0.01" inputmode="decimal" required></label>
+        <label>Fecha <input name="fecha" type="date"></label>
+      </div>
+      <label>Nota <input name="nota" maxlength="120" placeholder="Opcional (ej. transferencia, efectivo)"></label>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec" id="cerrar-abono">Cancelar</button>
+        <button type="submit" class="b b-pri">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="js/config.js?v=13"></script>
+  <script type="module" src="js/panel.js?v=22"></script>
+</body>
+</html>

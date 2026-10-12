@@ -1,0 +1,106 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "invitados": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      "$id": {
+        ".read": true
+      }
+    },
+    "enviados": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
+    "notas": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
+    "respuestas": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      "$id": {
+        ".read": true,
+        ".write": "root.child('invitados').child($id).exists() && root.child('invitados').child($id).child('estado').val() == 'Habilitado' && now < 1796018399000",
+        ".validate": "newData.hasChildren(['asistencia', 'confirmados', 'fecha'])",
+        "asistencia": {
+          ".validate": "newData.val() == 'si' || newData.val() == 'no'"
+        },
+        "confirmados": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= root.child('invitados').child($id).child('personas').val() && (newData.parent().child('asistencia').val() == 'no' || newData.val() >= 1)"
+        },
+        "asistentes": {
+          ".validate": "newData.isString() && newData.val().length <= 1000"
+        },
+        "comentario": {
+          ".validate": "newData.isString() && newData.val().length <= 500"
+        },
+        "fecha": {
+          ".validate": "newData.val() == now"
+        },
+        "$otro": {
+          ".validate": false
+        }
+      }
+    },
+    "admins": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      "$telefono": {
+        ".validate": "$telefono.matches(/^[0-9]{10}$/) && newData.isBoolean()"
+      }
+    },
+    "generales": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      "$tel": {
+        ".write": "!data.exists() && newData.exists() && now < 1796018399000",
+        ".validate": "$tel.matches(/^[0-9]{10}$/) && newData.hasChildren(['nombre', 'telefono', 'asistencia', 'confirmados', 'asistentes', 'fecha'])",
+        "nombre": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 120"
+        },
+        "telefono": {
+          ".validate": "newData.val() == $tel"
+        },
+        "asistencia": {
+          ".validate": "newData.val() == 'si' || newData.val() == 'no'"
+        },
+        "confirmados": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && (newData.val() <= 6 || (auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true) && newData.val() <= 20) && (newData.parent().child('asistencia').val() == 'no' || newData.val() >= 1)"
+        },
+        "asistentes": {
+          ".validate": "newData.isString() && newData.val().length <= 1000 && (newData.parent().child('asistencia').val() == 'no' || newData.val().length >= 2)"
+        },
+        "comentario": {
+          ".validate": "newData.isString() && newData.val().length <= 500"
+        },
+        "origen": {
+          ".validate": "newData.val() == 'admin' && (auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true)"
+        },
+        "fecha": {
+          ".validate": "newData.val() == now"
+        },
+        "$otro": {
+          ".validate": false
+        }
+      }
+    },
+    "mesas": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
+    "acomodo": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
+    "salon": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
+    "gastos": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    }
+  }
+}
