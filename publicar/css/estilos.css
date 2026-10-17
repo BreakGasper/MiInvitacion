@@ -354,10 +354,13 @@ button { font: inherit; cursor: pointer; }
    HISTORIA / PADRES / FECHA
    ================================================================ */
 .historia-foto {
-  width: min(100%, 420px); margin: 0 auto 32px;
-  aspect-ratio: 4 / 2.7; object-fit: cover;
+  /* grande: de orilla a orilla en el celular y hasta 760px en computadora */
+  display: block; width: calc(100% + 32px); max-width: none;
+  margin: 0 -16px 32px;
+  aspect-ratio: 1280 / 853; object-fit: cover;
   box-shadow: var(--sombra);
 }
+@media (min-width: 792px) { .historia-foto { width: 100%; margin: 0 auto 32px; } }
 .historia-cita {
   margin: 0 auto 26px; max-width: 520px;
   font-family: var(--f-script);
