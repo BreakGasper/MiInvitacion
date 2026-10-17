@@ -59,7 +59,7 @@ window.INVITACION = {
 
   historia: {
     activo: true,
-    foto: 'img/foto-ejemplo.svg',
+    foto: 'img/historia.jpg', // a color: los novios tomados de la mano en el puente
     cita: 'Entre tantos caminos en el mundo,\nel mejor siempre fue encontrarnos.',
     texto: '',
   },
