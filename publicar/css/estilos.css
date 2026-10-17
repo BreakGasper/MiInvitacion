@@ -920,3 +920,7 @@ body:has(.dock:not([hidden])) .musica-flot { bottom: 88px; }
   font-family: var(--f-script); font-size: 28px; line-height: 1.2;
   letter-spacing: 0; text-transform: none; color: var(--titulo);
 }
+/* Padres: tarjetas más anchas para que los nombres largos quepan en un renglón */
+.padres-grid.invertido { max-width: 780px; }
+.padres-grid.invertido .padres-card { padding-left: 14px; padding-right: 14px; }
+.padres-grid.invertido .padres-nombre { text-wrap: balance; }
