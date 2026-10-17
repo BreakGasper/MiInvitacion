@@ -209,7 +209,7 @@ window.INVITACION = {
 
   fotoFinal: {
     activo: true,
-    foto: 'img/foto-ejemplo.svg',
+    foto: 'img/foto-final.jpg', // foto vertical de los novios frente a la capilla
   },
 
   confirmacion: {
