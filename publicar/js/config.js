@@ -251,7 +251,7 @@ window.INVITACION = {
   },
 
   pie: {
-    foto: 'img/pie-anillos-hd.jpg',
+    foto: 'img/pie-manos.jpg', // manos con el anillo (vertical 3:4; el texto va arriba, en el cielo)
     frase: '¡Te esperamos!',
   },
 };

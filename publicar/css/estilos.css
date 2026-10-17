@@ -725,19 +725,19 @@ button { font: inherit; cursor: pointer; }
 .rep-play.sonando { animation: pulso-rep 2.4s ease-in-out infinite; }
 @keyframes pulso-rep { 0%, 100% { box-shadow: 0 3px 8px rgba(0,0,0,.2); } 50% { box-shadow: 0 3px 14px rgba(179,129,61,.45); } }
 .pie {
-  aspect-ratio: 1600 / 1062;            /* misma proporción que la foto: no se recorta ni se agranda */
-  max-height: 85vh; width: 100%;
-  padding: 16px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  /* foto vertical 3:4 completa: el texto arriba (cielo) y las manos con el anillo libres abajo */
+  aspect-ratio: 3 / 4;
+  width: min(100%, calc(88vh * .75)); margin: 0 auto;
+  padding: 9% 16px 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
   background-position: center; background-size: cover;
 }
-.pie::before {                           /* máscara negra que se difumina hacia las orillas */
+.pie::before {                           /* oscurece solo arriba (para leer el texto) y un poco las orillas */
   background:
-    radial-gradient(ellipse 70% 65% at 50% 50%, rgba(0, 0, 0, .28) 0%, rgba(0, 0, 0, .55) 60%, rgba(0, 0, 0, .85) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, .55) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, .6) 100%);
-  backdrop-filter: blur(1px);
+    linear-gradient(180deg, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, .32) 26%, rgba(0, 0, 0, .08) 42%, transparent 55%, transparent 82%, rgba(0, 0, 0, .35) 100%),
+    radial-gradient(ellipse 85% 80% at 50% 55%, transparent 60%, rgba(0, 0, 0, .3) 100%);
 }
-.pie .pie-nombres { font-size: clamp(40px, 11vw, 76px); text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
+.pie .pie-nombres { font-size: clamp(40px, min(11vw, 7.5vh), 66px); text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
 .pie .pie-fecha, .pie .pie-frase { text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
 @media (max-width: 420px) { .pie .pie-frase { margin-top: 10px; } }
 
