@@ -119,7 +119,7 @@ window.INVITACION = {
       { texto: 'Brindis', icono: 'copas' },
       { texto: 'Baile\nVals', icono: 'baile' },
       { texto: 'Música', icono: 'musica' },
-      { hora: '2:00 AM', texto: 'Fin de la\ncelebración', icono: 'luna' },
+      { texto: 'Fin de la\ncelebración', icono: 'luna' },
     ],
   },
 
