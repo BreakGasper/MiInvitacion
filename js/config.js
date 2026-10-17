@@ -37,9 +37,8 @@ window.INVITACION = {
     archivo: 'musica/mmxx-instrumental-suave.mp3',
   },
 
-  // PENDIENTE: fotos
   portada: {
-    foto: 'img/foto-ejemplo.svg',
+    foto: 'img/portada.jpg', // foto en el cuadrito (polaroid) junto al sobre
     blancoYNegro: true,
     // Texto arriba de la cuenta regresiva
     leyenda: 'Tenemos el honor de invitarte a nuestra boda',
