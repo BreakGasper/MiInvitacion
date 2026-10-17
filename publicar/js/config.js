@@ -68,8 +68,8 @@ window.INVITACION = {
     activo: true,
     titulo: 'Con la bendición de nuestros padres',
     grupos: [
-      { etiqueta: 'Padres de la novia', nombres: ['Juan Ruelas Rodríguez', 'Marcella Michel Castro'] },
-      { etiqueta: 'Padres del novio', nombres: ['Maribel Gaspar Contreras', 'Ángel Mendiola Ramos'] },
+      { etiqueta: 'Padres de la novia', nombres: ['Juan Ruelas Rodríguez', 'Margarita Marcella Michel Castro'] },
+      { etiqueta: 'Padres del novio', nombres: ['Maribel Gaspar Contreras', 'José Ángel Mendiola Ramos'] },
     ],
   },
 
