@@ -152,7 +152,7 @@ window.INVITACION = {
   galeria: {
     activo: true,
     titulo: 'Nuestros momentos',
-    fotos: ['img/galeria-cargada-2.jpg', 'img/galeria-atardecer-2.jpg', 'img/galeria-baile.jpg'],
+    fotos: ['img/galeria-cargada-2.jpg', 'img/galeria-atardecer-3.jpg', 'img/galeria-baile.jpg'],
   },
 
   regalos: {
