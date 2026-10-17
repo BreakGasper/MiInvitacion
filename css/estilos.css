@@ -462,7 +462,11 @@ button { font: inherit; cursor: pointer; }
 .galeria { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 1100px; margin: 0 -12px; }
 @media (min-width: 640px) { .galeria { gap: 14px; margin: 0 auto; } }
 .galeria button { padding: 0; border: 0; background: none; overflow: hidden; box-shadow: var(--sombra); }
-.galeria img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: center 35%; transition: transform .6s ease; }
+.galeria img {
+  display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover;
+  object-position: center bottom; /* si algo se recorta, que sea el cielo y nunca los pies */
+  transform-origin: center bottom; transition: transform .6s ease;
+}
 .galeria button:hover img { transform: scale(1.05); }
 
 .visor {
