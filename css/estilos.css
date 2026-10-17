@@ -725,19 +725,19 @@ button { font: inherit; cursor: pointer; }
 .rep-play.sonando { animation: pulso-rep 2.4s ease-in-out infinite; }
 @keyframes pulso-rep { 0%, 100% { box-shadow: 0 3px 8px rgba(0,0,0,.2); } 50% { box-shadow: 0 3px 14px rgba(179,129,61,.45); } }
 .pie {
-  /* foto vertical 3:4 completa: el texto arriba (cielo) y las manos con el anillo libres abajo */
-  aspect-ratio: 3 / 4;
-  width: min(100%, calc(88vh * .75)); margin: 0 auto;
-  padding: 9% 16px 16px;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  /* foto horizontal a todo el ancho; en el celular gana altura para que quepa el texto */
+  aspect-ratio: 1066 / 599;
+  width: 100%; min-height: 340px; max-height: 85vh;
+  padding: 16px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
   background-position: center; background-size: cover;
 }
-.pie::before {                           /* oscurece solo arriba (para leer el texto) y un poco las orillas */
+.pie::before {                           /* máscara negra para que resalten las letras */
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, .32) 26%, rgba(0, 0, 0, .08) 42%, transparent 55%, transparent 82%, rgba(0, 0, 0, .35) 100%),
-    radial-gradient(ellipse 85% 80% at 50% 55%, transparent 60%, rgba(0, 0, 0, .3) 100%);
+    radial-gradient(ellipse 75% 70% at 50% 50%, rgba(0, 0, 0, .42) 0%, rgba(0, 0, 0, .58) 60%, rgba(0, 0, 0, .82) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .45) 0%, transparent 25%, transparent 75%, rgba(0, 0, 0, .5) 100%);
 }
-.pie .pie-nombres { font-size: clamp(40px, min(11vw, 7.5vh), 66px); text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
+.pie .pie-nombres { font-size: clamp(40px, 11vw, 76px); text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
 .pie .pie-fecha, .pie .pie-frase { text-shadow: 0 1px 6px rgba(0, 0, 0, .6); }
 @media (max-width: 420px) { .pie .pie-frase { margin-top: 10px; } }
 
