@@ -364,7 +364,30 @@
   const hayMusica = activo(C.musica) && C.musica.archivo;
   const rep = $('#reproductor');
   if (hayMusica) audio.src = C.musica.archivo;
-  audio.addEventListener('error', () => { if (rep) rep.hidden = true; });
+  const flot = $('#musica-flot');
+  audio.addEventListener('error', () => { if (rep) rep.hidden = true; flot.hidden = true; });
+
+  async function alternarMusica() {
+    if (!audio.paused) { audio.pause(); return; }
+    try {
+      await audio.play();
+    } catch {
+      // si el navegador perdió el audio, se recarga y sigue donde iba
+      const t = audio.currentTime;
+      audio.load();
+      audio.addEventListener('loadedmetadata', () => { audio.currentTime = t; audio.play().catch(() => {}); }, { once: true });
+    }
+  }
+
+  // Botón flotante de música (aparece al abrir el sobre)
+  const pintarFlot = () => {
+    flot.innerHTML = `<i class="fa-solid fa-${audio.paused ? 'play' : 'pause'}"></i>`;
+    flot.setAttribute('aria-label', audio.paused ? 'Reproducir canción' : 'Pausar canción');
+    flot.classList.toggle('sonando', !audio.paused);
+  };
+  audio.addEventListener('play', pintarFlot);
+  audio.addEventListener('pause', pintarFlot);
+  flot.addEventListener('click', alternarMusica);
 
   if (rep) {
     const play = $('#rep-play');
@@ -383,17 +406,7 @@
     audio.addEventListener('play', pintarPlay);
     audio.addEventListener('pause', pintarPlay);
     audio.addEventListener('timeupdate', pintarAvance);
-    play.addEventListener('click', async () => {
-      if (!audio.paused) { audio.pause(); return; }
-      try {
-        await audio.play();
-      } catch {
-        // si el navegador perdió el audio, se recarga y sigue donde iba
-        const t = audio.currentTime;
-        audio.load();
-        audio.addEventListener('loadedmetadata', () => { audio.currentTime = t; audio.play().catch(() => {}); }, { once: true });
-      }
-    });
+    play.addEventListener('click', alternarMusica);
     $('#rep-ant').addEventListener('click', () => ir(0));
     $('#rep-sig').addEventListener('click', () => ir(audio.currentTime + 15));
     barra.addEventListener('click', (e) => {
@@ -418,7 +431,11 @@
     setTimeout(() => portal.classList.add('solapa-atras'), 380 * r);
     setTimeout(() => portal.classList.add('carta-sube'), 750 * r);
     setTimeout(() => { portal.classList.add('cerrado'); document.body.classList.remove('bloqueado'); }, 1900 * r);
-    setTimeout(() => { portal.remove(); pintarDock(); }, 1900 * r + 1100);
+    setTimeout(() => {
+      portal.remove();
+      pintarDock();
+      if (hayMusica && !audio.error) { pintarFlot(); flot.hidden = false; }
+    }, 1900 * r + 1100);
   });
 
   /* ============================================================

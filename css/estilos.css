@@ -855,3 +855,31 @@ button { font: inherit; cursor: pointer; }
 .regalo-logo img { display: block; height: 38px; width: auto; max-width: 75%; margin: 0 auto; object-fit: contain; }
 
 .padres-grid.uno { grid-template-columns: 1fr; max-width: 380px; }
+
+/* ============ BOTÓN FLOTANTE DE MÚSICA ============ */
+.musica-flot {
+  position: fixed; z-index: 61; right: 14px; bottom: 16px;
+  width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center; padding: 0;
+  border: 2px solid #c9a24a; background: #1f3557; color: #f3dfae;
+  font-size: 18px; cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .25);
+  transition: bottom .4s ease, transform .2s ease;
+  animation: flot-in .6s ease both;
+}
+.musica-flot:hover { transform: scale(1.06); }
+.musica-flot:active { transform: scale(.94); }
+.musica-flot .fa-play { margin-left: 3px; }
+/* Si está la tarjeta de confirmación abajo, el botón se sube para no taparla */
+body:has(.dock:not([hidden])) .musica-flot { bottom: 88px; }
+/* Mientras suena: ondas doradas */
+.musica-flot.sonando::before, .musica-flot.sonando::after {
+  content: ''; position: absolute; inset: -2px; border-radius: 50%;
+  border: 2px solid #c9a24a; animation: flot-onda 2s ease-out infinite; pointer-events: none;
+}
+.musica-flot.sonando::after { animation-delay: 1s; }
+@keyframes flot-onda { to { transform: scale(1.7); opacity: 0; } }
+@keyframes flot-in { from { opacity: 0; transform: translateY(20px) scale(.8); } }
+@media (prefers-reduced-motion: reduce) {
+  .musica-flot, .musica-flot.sonando::before, .musica-flot.sonando::after { animation: none; }
+}
