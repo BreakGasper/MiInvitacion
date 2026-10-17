@@ -333,13 +333,7 @@ button { font: inherit; cursor: pointer; }
 }
 .pase h2 { font-family: var(--f-script); font-weight: 500; font-size: clamp(34px, 8vw, 44px); color: var(--titulo); margin: 0 0 22px; text-align: center; }
 .pase-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; }
-.pase-qr {
-  justify-self: center;
-  background: #fff; padding: 14px; border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
-}
-.pase-qr img, .pase-qr canvas { width: 170px; height: 170px; }
-.pase-datos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; text-align: left; }
+.pase-datos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; text-align: left; width: 100%; max-width: 460px; margin: 0 auto; }
 .dato-full { grid-column: 1 / -1; }
 .dato-lbl { display: block; font-family: var(--f-script); font-size: 26px; line-height: 1.1; color: var(--titulo); }
 .dato-val { display: block; font-family: var(--f-serif); font-size: 15px; color: var(--titulo); }
@@ -347,7 +341,7 @@ button { font: inherit; cursor: pointer; }
 .dato-val.estado-no::before { content: "● "; color: #c08b84; }
 @media (min-width: 640px) {
   .pase { padding: 40px 40px; }
-  .pase-grid { grid-template-columns: auto 1fr; gap: 40px; }
+  .pase-grid { grid-template-columns: 1fr; }
 }
 
 /* ================================================================

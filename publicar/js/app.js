@@ -572,7 +572,6 @@
       <div class="pase rv">
         <h2>${esc(C.pase.titulo)}</h2>
         <div class="pase-grid">
-          <div class="pase-qr" id="qr" title="Pase ${esc(inv.id)}"></div>
           <div class="pase-datos">
             <div class="dato-full"><span class="dato-lbl">Nombre</span><span class="dato-val">${esc(inv.nombre)}</span></div>
             <div><span class="dato-lbl">Personas</span><span class="dato-val">${esc(inv.personas)}</span></div>
@@ -583,10 +582,6 @@
         </div>
       </div>`;
     sec.hidden = false;
-    if (window.QRCode) {
-      const url = `${location.origin}${location.pathname}?p=${encodeURIComponent(inv.id)}`;
-      new QRCode($('#qr'), { text: url, width: 170, height: 170, colorDark: '#5d5854', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
-    }
     observar(sec);
   }
 
