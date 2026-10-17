@@ -95,11 +95,11 @@
     </section>`;
 
   // Sección de tarjetas con nombres (padres, padrinos…)
-  const tarjetasNombres = (sec) => !activo(sec) ? '' : `
+  const tarjetasNombres = (sec, clase = '') => !activo(sec) ? '' : `
     <section class="seccion">
       <div class="contenido">
         <h2 class="t-script rv">${esc(sec.titulo)}</h2>
-        <div class="padres-grid ${sec.grupos.length === 1 ? 'uno' : ''}">
+        <div class="padres-grid ${sec.grupos.length === 1 ? 'uno' : ''} ${clase}">
           ${sec.grupos.map((g) => `
             <div class="padres-card rv">
               ${g.nombres.map((n) => `<p class="padres-nombre">${esc(n)}</p>`).join('')}
@@ -109,7 +109,7 @@
         </div>
       </div>
     </section>`;
-  S.padres = () => tarjetasNombres(C.padres);
+  S.padres = () => tarjetasNombres(C.padres, 'invertido');
   S.padrinos = () => tarjetasNombres(C.padrinos);
 
   S.fecha = () => `

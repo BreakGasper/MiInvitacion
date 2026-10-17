@@ -909,3 +909,14 @@ body:has(.dock:not([hidden])) .musica-flot { bottom: 88px; }
 }
 .hotel-btn:hover { background: var(--boton-hover); }
 @media (max-width: 370px) { .hotel-btn span { display: none; } .hotel-btn { padding: 10px 12px; } }
+
+/* Padres: la etiqueta en cursiva y los nombres con el estilo de la frase de la portada */
+.padres-grid.invertido .padres-nombre {
+  font-family: var(--f-serif); font-style: italic;
+  font-size: 17px; line-height: 1.75; color: var(--texto);
+}
+.padres-grid.invertido .padres-etq {
+  margin-top: 12px !important;
+  font-family: var(--f-script); font-size: 28px; line-height: 1.2;
+  letter-spacing: 0; text-transform: none; color: var(--titulo);
+}
