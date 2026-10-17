@@ -99,7 +99,7 @@ window.INVITACION = {
       activo: true,
       titulo: 'Recepción',
       ilustracion: 'recepcion',
-      hora: '19:00',
+      hora: '18:30',
       lugar: 'Salón de Eventos Isla Event’s',
       direccion: 'Referencia: Carretera, salida a Santa Cruz.\nSan Martín Hidalgo, Jal.',
       mapa: 'https://maps.app.goo.gl/8jzYtQt7BmXneg3J9',
@@ -113,7 +113,7 @@ window.INVITACION = {
     items: [
       { hora: '4:00 PM', texto: 'Ceremonia', icono: 'iglesia' },
       { texto: 'Fotos', icono: 'camara' },
-      { hora: '7:00 PM', texto: 'Recepción', icono: 'arco' },
+      { hora: '6:30 PM', texto: 'Recepción', icono: 'arco' },
       { texto: 'Cena y\nbanquete', icono: 'mesa' },
       { texto: 'Fotos', icono: 'camara' },
       { texto: 'Brindis', icono: 'copas' },
