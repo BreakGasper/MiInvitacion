@@ -459,10 +459,10 @@ button { font: inherit; cursor: pointer; }
 .vest-nota { font-style: italic; font-family: var(--f-serif); font-size: 14px; color: var(--texto-suave); margin: 16px 0 0; }
 
 /* ---------- galería ---------- */
-.galeria { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 900px; margin: 0 auto; }
-@media (min-width: 640px) { .galeria { gap: 14px; } }
+.galeria { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 1100px; margin: 0 -12px; }
+@media (min-width: 640px) { .galeria { gap: 14px; margin: 0 auto; } }
 .galeria button { padding: 0; border: 0; background: none; overflow: hidden; box-shadow: var(--sombra); }
-.galeria img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center 35%; transition: transform .6s ease; }
+.galeria img { display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; object-position: center 35%; transition: transform .6s ease; }
 .galeria button:hover img { transform: scale(1.05); }
 
 .visor {
