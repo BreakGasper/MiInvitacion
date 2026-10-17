@@ -85,7 +85,10 @@
   S.historia = () => !activo(C.historia) ? '' : `
     <section class="seccion">
       <div class="contenido">
-        <img class="historia-foto rv" src="${esc(C.historia.foto)}" alt="${esc(PAREJA)}" loading="lazy">
+        <figure class="historia-marco rv">
+          <img class="historia-foto" src="${esc(C.historia.foto)}" alt="${esc(PAREJA)}" loading="lazy">
+          <span class="esq e1"></span><span class="esq e2"></span><span class="esq e3"></span><span class="esq e4"></span>
+        </figure>
         ${C.historia.cita ? `<blockquote class="historia-cita rv">&ldquo;${br(C.historia.cita)}&rdquo;</blockquote>` : ""}
         ${C.historia.texto ? `<p class="historia-texto rv">${br(C.historia.texto)}</p>` : ''}
       </div>
