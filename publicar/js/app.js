@@ -110,7 +110,7 @@
       </div>
     </section>`;
   S.padres = () => tarjetasNombres(C.padres, 'invertido');
-  S.padrinos = () => tarjetasNombres(C.padrinos);
+  S.padrinos = () => tarjetasNombres(C.padrinos, 'invertido');
 
   S.fecha = () => `
     <section class="seccion">

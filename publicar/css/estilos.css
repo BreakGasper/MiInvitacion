@@ -924,3 +924,5 @@ body:has(.dock:not([hidden])) .musica-flot { bottom: 88px; }
 .padres-grid.invertido { max-width: 780px; }
 .padres-grid.invertido .padres-card { padding-left: 14px; padding-right: 14px; }
 .padres-grid.invertido .padres-nombre { text-wrap: balance; }
+/* Una sola tarjeta (padrinos): angosta y centrada */
+.padres-grid.uno.invertido { max-width: 420px; }
