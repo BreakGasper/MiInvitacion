@@ -183,11 +183,29 @@ window.INVITACION = {
     sobres: 'Si lo prefieres, también puedes darnos\ntu obsequio el día de la boda.',
   },
 
-  // PENDIENTE
+  // Hoteles cercanos, separados por lugar
   hoteles: {
-    activo: false,
-    titulo: 'Hospedaje',
-    items: [],
+    activo: true,
+    titulo: 'Hoteles cercanos',
+    texto: 'Si vienes de fuera, estas son algunas opciones\npara hospedarte cerca de la celebración.',
+    grupos: [
+      {
+        lugar: 'Cocula',
+        items: [
+          { nombre: 'Hotel Real Cocula', mapa: 'https://maps.app.goo.gl/yVGq6H4ePMVmbcVs6' },
+          { nombre: 'Hotel Estancia Vida Luna', mapa: 'https://maps.app.goo.gl/fBuyLQ622yAU2PtJA' },
+          { nombre: 'Hotel Casa Cocula', mapa: 'https://maps.app.goo.gl/rdK13wBfeCy8xd5f6' },
+        ],
+      },
+      {
+        lugar: 'San Martín Hidalgo',
+        items: [
+          { nombre: 'Hotel Las Rosas', mapa: 'https://maps.app.goo.gl/x76ahNuT8XVSMVRa8' },
+          { nombre: 'Hospedaje Hotel Tenochtitlan', mapa: 'https://www.google.com/maps?ftid=0x8425df00531fdd5d:0xf4fd631acb95eb8d' },
+          { nombre: 'Hotel Posada Corona', mapa: 'https://maps.app.goo.gl/w39JN3FbLngrjwTx6' },
+        ],
+      },
+    ],
   },
 
   // PENDIENTE

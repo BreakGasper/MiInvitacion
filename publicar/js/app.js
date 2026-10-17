@@ -235,21 +235,37 @@
     </section>`;
   };
 
-  S.hoteles = () => !activo(C.hoteles) || !C.hoteles.items?.length ? '' : `
+  // Hoteles: separados por lugar (grupos) o en una sola lista (items)
+  const tarjetaHotel = (h) => `
+    <div class="hotel rv">
+      <span class="hotel-ico"><i class="fa-solid fa-bed"></i></span>
+      <div class="hotel-info">
+        <h4>${esc(h.nombre)}</h4>
+        ${h.detalle ? `<p>${br(h.detalle)}</p>` : ''}
+        ${h.telefono ? `<p><a href="tel:${esc(h.telefono)}"><i class="fa-solid fa-phone"></i> ${esc(h.telefono)}</a></p>` : ''}
+      </div>
+      ${h.mapa || h.url ? `<a class="hotel-btn" href="${esc(h.mapa || h.url)}" target="_blank" rel="noopener" aria-label="Ver ubicación de ${esc(h.nombre)}">
+        <i class="fa-solid fa-location-dot"></i> <span>Ver ubicación</span></a>` : ''}
+    </div>`;
+  S.hoteles = () => {
+    const H = C.hoteles;
+    const grupos = H?.grupos?.length ? H.grupos : H?.items?.length ? [{ lugar: '', items: H.items }] : [];
+    if (!activo(H) || !grupos.length) return '';
+    return `
     <section class="seccion">
       <div class="contenido">
-        <h2 class="t-script rv">${esc(C.hoteles.titulo)}</h2>
-        <div class="lista-tarjetas">
-          ${C.hoteles.items.map((h) => `
-            <div class="item-tarjeta rv">
-              <h3>${esc(h.nombre)}</h3>
-              ${h.detalle ? `<p>${br(h.detalle)}</p>` : ''}
-              ${h.telefono ? `<p><a href="tel:${esc(h.telefono)}">${esc(h.telefono)}</a></p>` : ''}
-              ${h.url ? `<a class="btn" href="${esc(h.url)}" target="_blank" rel="noopener">Reservar</a>` : ''}
+        <h2 class="t-script rv">${esc(H.titulo)}</h2>
+        ${H.texto ? `<p class="hoteles-txt rv">${br(H.texto)}</p>` : ''}
+        <div class="hoteles">
+          ${grupos.map((g) => `
+            <div class="hotel-grupo">
+              ${g.lugar ? `<h3 class="hotel-lugar rv"><span>${esc(g.lugar)}</span></h3>` : ''}
+              ${(g.items || []).map(tarjetaHotel).join('')}
             </div>`).join('')}
         </div>
       </div>
     </section>`;
+  };
 
   S.instagram = () => {
     const I = C.instagram;

@@ -883,3 +883,35 @@ body:has(.dock:not([hidden])) .musica-flot { bottom: 88px; }
 @media (prefers-reduced-motion: reduce) {
   .musica-flot, .musica-flot.sonando::before, .musica-flot.sonando::after { animation: none; }
 }
+
+/* ============ HOTELES CERCANOS ============ */
+.hoteles-txt { margin: 6px auto 0; max-width: 460px; font-family: var(--f-serif); font-size: 15px; line-height: 1.7; }
+.hoteles { display: grid; gap: 30px; max-width: 560px; margin: 26px auto 0; text-align: left; }
+@media (min-width: 760px) { .hoteles { grid-template-columns: 1fr 1fr; max-width: 760px; gap: 28px; } }
+.hotel-grupo { display: grid; gap: 10px; align-content: start; }
+.hotel-lugar {
+  display: flex; align-items: center; gap: 12px; margin: 0 0 4px;
+  font-family: var(--f-serif); font-weight: 400; font-size: 15px;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--titulo);
+}
+.hotel-lugar::before, .hotel-lugar::after { content: ''; flex: 1; height: 1px; background: var(--linea); }
+.hotel {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255, 255, 255, .65); border: 1px solid var(--linea); border-radius: 10px;
+  padding: 12px 12px 12px 14px;
+}
+.hotel-ico {
+  flex: none; width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 15px;
+  background: #f3ead6; color: #a8762f;
+}
+.hotel-info { flex: 1; min-width: 0; }
+.hotel-info h4 { margin: 0; font-family: var(--f-serif); font-weight: 400; font-size: 16px; line-height: 1.3; color: var(--texto); }
+.hotel-info p { margin: 2px 0 0; font-size: 13px; color: var(--suave, #6b6560); }
+.hotel-btn {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 12px; border-radius: 10px; text-decoration: none;
+  background: var(--boton); color: #fff; font-size: 12px; white-space: nowrap;
+}
+.hotel-btn:hover { background: var(--boton-hover); }
+@media (max-width: 370px) { .hotel-btn span { display: none; } .hotel-btn { padding: 10px 12px; } }
