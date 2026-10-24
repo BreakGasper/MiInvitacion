@@ -101,6 +101,43 @@
     "gastos": {
       ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
       ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
+    "fotos": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      "$id": {
+        ".write": "!data.exists() && newData.exists() && now < 1801461599000",
+        ".validate": "newData.hasChildren(['mesa', 'thumb', 'fecha']) && newData.parent().parent().child('fotosImg').child($id).exists()",
+        "mesa": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200"
+        },
+        "thumb": {
+          ".validate": "newData.isString() && newData.val().beginsWith('data:image/jpeg;base64,') && newData.val().length < 150000"
+        },
+        "fecha": {
+          ".validate": "newData.val() == now"
+        },
+        "nombre": {
+          ".validate": "newData.isString() && newData.val().length <= 60"
+        },
+        "w": {
+          ".validate": "newData.isNumber()"
+        },
+        "h": {
+          ".validate": "newData.isNumber()"
+        },
+        "$otro": {
+          ".validate": false
+        }
+      }
+    },
+    "fotosImg": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      "$id": {
+        ".write": "!data.exists() && newData.exists() && now < 1801461599000",
+        ".validate": "newData.isString() && newData.val().beginsWith('data:image/jpeg;base64,') && newData.val().length < 1100000 && newData.parent().parent().child('fotos').child($id).exists()"
+      }
     }
   }
 }

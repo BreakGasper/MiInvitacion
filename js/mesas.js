@@ -347,6 +347,12 @@ export function iniciarMesas({ db, esc, toast }) {
   $('#acomodo-sin-mesa').addEventListener('change', (e) => { st.soloSinMesa = e.target.checked; pintarLista(); });
 
   /* ---------- exportar ---------- */
+  // Tarjetas de mesa para imprimir (frente con el número y vuelta con el QR de fotos)
+  $('#imprimir-tarjetas').addEventListener('click', () => {
+    const nums = mesasOrdenadas().map(([, m]) => m.numero).filter(Boolean).join(',');
+    window.open(`mesas-imprimir.html?n=${encodeURIComponent(nums || '1-25')}`, '_blank', 'noopener');
+  });
+
   $('#exportar-mesas').addEventListener('click', () => {
     const celda = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const filas = [['Mesa', 'Tipo', 'Capacidad', 'Invitado'].map(celda).join(',')];

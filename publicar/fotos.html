@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f4f1ec">
+  <title>Comparte tus fotos · Carlos &amp; Monse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=MonteCarlo&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --fondo: #f4f1ec; --papel: #fbf8f2; --texto: #726d69; --titulo: #6a6560;
+      --oro: #b3813d; --salvia: #8c9a78; --linea: #e3dad0; --azul: #1f3557;
+      --f-script: 'MonteCarlo', cursive; --f-serif: 'Libre Baskerville', Georgia, serif; --f-sans: 'Montserrat', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { margin: 0; }
+    body {
+      min-height: 100dvh; background: var(--fondo); color: var(--texto);
+      font: 15px/1.6 var(--f-sans); text-align: center;
+      padding: 0 16px calc(24px + env(safe-area-inset-bottom));
+    }
+    .hojas { display: block; width: min(440px, 100%); margin: 0 auto -8px; opacity: .9; }
+    .tarjeta {
+      max-width: 440px; margin: 0 auto; padding: 26px 20px 24px;
+      background: var(--papel); border-radius: 220px 220px 18px 18px;
+      box-shadow: 0 10px 30px rgba(80, 60, 30, .10); border: 1px solid var(--linea);
+    }
+    .k { font-family: var(--f-serif); font-size: 12px; letter-spacing: .32em; text-transform: uppercase; margin: 34px 0 0; }
+    .corazon { color: var(--oro); font-size: 11px; margin: 6px 0 0; }
+    h1 { font-family: var(--f-script); font-weight: 400; font-size: 64px; line-height: 1; color: var(--titulo); margin: 6px 0 4px; }
+    .novios { font-family: var(--f-serif); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; margin: 0; }
+    .fecha { font-size: 12px; letter-spacing: .2em; margin: 2px 0 16px; }
+    .txt { font-family: var(--f-serif); font-style: italic; font-size: 15px; line-height: 1.7; margin: 0 auto 18px; max-width: 320px; }
+    label.nombre { display: block; text-align: left; font-size: 12px; letter-spacing: .08em; margin: 0 auto 14px; max-width: 320px; }
+    label.nombre input {
+      display: block; width: 100%; margin-top: 4px; padding: 12px 14px; border-radius: 12px;
+      border: 1px solid var(--linea); background: #fff; font: 16px var(--f-sans); color: var(--texto);
+    }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; max-width: 320px; margin: 0 auto 10px;
+      padding: 16px 18px; border-radius: 14px; border: 0; cursor: pointer;
+      font: 600 16px var(--f-sans); text-decoration: none;
+    }
+    .btn-cam { background: var(--azul); color: #fff; font-size: 17px; padding: 18px; box-shadow: 0 8px 20px rgba(31, 53, 87, .25); }
+    .btn-cam i { font-size: 20px; color: #f3dfae; }
+    .btn-gal { background: #fff; color: var(--titulo); border: 1px solid var(--linea); }
+    .btn:active { transform: scale(.98); }
+    .estado { min-height: 22px; margin: 6px 0 0; font-size: 14px; }
+    .estado.ok { color: #3e8a52; }
+    .estado.error { color: #b0473f; }
+    .barra { height: 6px; max-width: 320px; margin: 8px auto 0; border-radius: 6px; background: var(--linea); overflow: hidden; }
+    .barra span { display: block; height: 100%; width: 0; background: var(--oro); transition: width .3s; }
+    .mias { max-width: 440px; margin: 22px auto 0; }
+    .mias h2 { font-family: var(--f-serif); font-weight: 400; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 10px; }
+    .mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .mini img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+    .pie { margin: 26px 0 0; font-family: var(--f-script); font-size: 34px; color: var(--titulo); }
+  </style>
+</head>
+<body>
+  <svg class="hojas" viewBox="0 0 400 90" aria-hidden="true" id="hojas"></svg>
+
+  <main class="tarjeta">
+    <p class="k" id="k">Mesa</p>
+    <p class="corazon"><i class="fa-solid fa-heart"></i></p>
+    <h1 id="titulo">Fotos</h1>
+    <p class="novios">Carlos &amp; Monse</p>
+    <p class="fecha">19 · 12 · 2026</p>
+    <p class="txt">Ayúdanos a guardar cada momento de este día.<br>Toma fotos y se guardarán en nuestro álbum.</p>
+
+    <label class="nombre">Tu nombre (opcional)
+      <input id="nombre" maxlength="60" autocomplete="name" placeholder="Para saber quién la tomó">
+    </label>
+
+    <button type="button" class="btn btn-cam" id="btn-cam"><i class="fa-solid fa-camera"></i> Tomar foto</button>
+    <button type="button" class="btn btn-gal" id="btn-gal"><i class="fa-regular fa-images"></i> Subir de mi galería</button>
+    <input type="file" id="in-cam" accept="image/*" capture="environment" hidden>
+    <input type="file" id="in-gal" accept="image/*" multiple hidden>
+
+    <p class="estado" id="estado" role="status"></p>
+    <div class="barra" id="barra" hidden><span id="avance"></span></div>
+  </main>
+
+  <section class="mias" id="mias" hidden>
+    <h2>Tus fotos enviadas · <span id="cuantas">0</span></h2>
+    <div class="mini" id="mini"></div>
+  </section>
+
+  <p class="pie">¡Gracias!</p>
+
+  <script src="js/config.js?v=55"></script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getDatabase, ref, push, update, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+    const $ = (s) => document.querySelector(s);
+    const db = getDatabase(initializeApp(window.INVITACION.firebase));
+    const mesa = Math.max(0, Math.min(200, parseInt(new URLSearchParams(location.search).get('mesa'), 10) || 0));
+    $('#titulo').textContent = mesa ? String(mesa) : 'Fotos';
+    $('#k').textContent = mesa ? 'Mesa' : 'Nuestra boda';
+    document.title = `${mesa ? `Mesa ${mesa}` : 'Fotos'} · Carlos & Monse`;
+
+    // Ramita de hojas arriba
+    const hojas = [];
+    for (let i = 0; i < 9; i++) {
+      const t = i / 8, x = 60 + t * 280, y = 70 - Math.sin(t * Math.PI) * 40;
+      const lado = i % 2 ? 1 : -1, a = (t - .5) * 50 + lado * 48;
+      hojas.push(`<ellipse cx="${x}" cy="${y}" rx="15" ry="6" transform="rotate(${a} ${x} ${y}) translate(${lado * 11} 0)" fill="#9aa886" fill-opacity="${.55 + (i % 3) * .12}"/>`);
+    }
+    $('#hojas').innerHTML = `<path d="M50 72 Q200 0 350 72" fill="none" stroke="#8c9a78" stroke-width="1.6"/>${hojas.join('')}`;
+
+    // Nombre recordado en este teléfono
+    try { $('#nombre').value = localStorage.getItem('fotos-nombre') || ''; } catch { /* sin almacenamiento */ }
+    $('#nombre').addEventListener('input', (e) => { try { localStorage.setItem('fotos-nombre', e.target.value.trim()); } catch { /* */ } });
+
+    $('#btn-cam').addEventListener('click', () => $('#in-cam').click());
+    $('#btn-gal').addEventListener('click', () => $('#in-gal').click());
+    $('#in-cam').addEventListener('change', (e) => subir([...e.target.files]).finally(() => { e.target.value = ''; }));
+    $('#in-gal').addEventListener('change', (e) => subir([...e.target.files]).finally(() => { e.target.value = ''; }));
+
+    // Reduce la foto para que pese poco (la base de datos guarda texto)
+    async function cargar(file) {
+      try { return await createImageBitmap(file, { imageOrientation: 'from-image' }); } catch { /* respaldo */ }
+      const url = URL.createObjectURL(file);
+      try {
+        const img = new Image();
+        img.src = url;
+        await img.decode();
+        return img;
+      } finally { setTimeout(() => URL.revokeObjectURL(url), 1000); }
+    }
+    function aJpeg(src, max, calidad) {
+      const w0 = src.width, h0 = src.height;
+      const k = Math.min(1, max / Math.max(w0, h0));
+      const cv = document.createElement('canvas');
+      cv.width = Math.round(w0 * k); cv.height = Math.round(h0 * k);
+      cv.getContext('2d').drawImage(src, 0, 0, cv.width, cv.height);
+      return { url: cv.toDataURL('image/jpeg', calidad), w: cv.width, h: cv.height };
+    }
+    async function preparar(file) {
+      const src = await cargar(file);
+      let full = aJpeg(src, 1600, .74);
+      if (full.url.length > 1050000) full = aJpeg(src, 1280, .66);
+      if (full.url.length > 1050000) full = aJpeg(src, 1024, .6);
+      let thumb = aJpeg(src, 360, .62);
+      if (thumb.url.length > 140000) thumb = aJpeg(src, 260, .55);
+      return { full, thumb };
+    }
+
+    let enviadas = 0;
+    async function subir(files) {
+      files = files.filter((f) => f && f.type.startsWith('image/'));
+      if (!files.length) return;
+      const estado = $('#estado');
+      estado.className = 'estado';
+      $('#barra').hidden = false;
+      let bien = 0;
+      for (let i = 0; i < files.length; i++) {
+        estado.textContent = files.length > 1 ? `Enviando foto ${i + 1} de ${files.length}…` : 'Enviando tu foto…';
+        $('#avance').style.width = `${(i / files.length) * 100 + 10}%`;
+        try {
+          const { full, thumb } = await preparar(files[i]);
+          const id = push(ref(db, 'fotos')).key;
+          const nombre = $('#nombre').value.trim().slice(0, 60);
+          await update(ref(db), {
+            [`fotos/${id}`]: { mesa, thumb: thumb.url, fecha: serverTimestamp(), w: full.w, h: full.h, ...(nombre ? { nombre } : {}) },
+            [`fotosImg/${id}`]: full.url,
+          });
+          bien += 1;
+          enviadas += 1;
+          const im = new Image(); im.src = thumb.url; im.alt = '';
+          $('#mini').prepend(im);
+          $('#cuantas').textContent = enviadas;
+          $('#mias').hidden = false;
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      $('#avance').style.width = '100%';
+      setTimeout(() => { $('#barra').hidden = true; $('#avance').style.width = '0'; }, 800);
+      if (bien === files.length) {
+        estado.className = 'estado ok';
+        estado.textContent = bien > 1 ? `¡Listo! Se guardaron ${bien} fotos. Gracias 💛` : '¡Listo! Tu foto se guardó. Gracias 💛';
+      } else {
+        estado.className = 'estado error';
+        estado.textContent = bien ? `Se guardaron ${bien} de ${files.length}. Intenta de nuevo con las demás.` : 'No se pudo enviar. Revisa tu internet e intenta de nuevo.';
+      }
+    }
+  </script>
+</body>
+</html>

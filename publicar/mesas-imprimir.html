@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tarjetas de mesa · Carlos &amp; Monse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=MonteCarlo&family=Sacramento&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --tinta: #5f5a52; --oro: #b8894a; --salvia: #8d9b78; --papel: #f8f3ea; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { margin: 0; }
+    body { background: #e9e5de; font-family: 'Montserrat', system-ui, sans-serif; color: var(--tinta); }
+
+    /* ---------- controles (no se imprimen) ---------- */
+    .controles {
+      position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+      padding: 12px 16px; background: #1f3557; color: #fff; font-size: 14px;
+    }
+    .controles h1 { margin: 0 12px 0 0; font: 400 26px 'MonteCarlo', cursive; }
+    .controles label { display: flex; align-items: center; gap: 6px; }
+    .controles select, .controles input { padding: 7px 9px; border-radius: 8px; border: 0; font: inherit; }
+    .controles input { width: 210px; }
+    .controles button { padding: 9px 16px; border: 0; border-radius: 10px; background: #f3dfae; color: #1f3557; font: 600 14px inherit; cursor: pointer; }
+    .ayuda { max-width: 900px; margin: 14px auto; padding: 0 16px; font-size: 13px; line-height: 1.6; }
+    .ayuda b { color: #1f3557; }
+
+    /* ---------- hojas tamaño carta horizontal con 2 tarjetas de 4×6 in ---------- */
+    @page { size: letter landscape; margin: 0; }
+    .hoja {
+      position: relative; width: 11in; height: 8.5in; margin: 16px auto; background: #fff;
+      display: flex; align-items: center; justify-content: center; gap: .9in;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .12); overflow: hidden; break-after: page;
+    }
+    .hueco { width: 4in; height: 6in; }
+    .tarjeta {
+      position: relative; width: 4in; height: 6in; overflow: hidden;
+      background: var(--papel); border-radius: 2in 2in 0 0;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    /* contorno de corte muy tenue */
+    .tarjeta::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .18); pointer-events: none; }
+    .tarjeta svg.deco { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .contenido { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+    /* frente */
+    .mesa-k { margin-top: 1.55in; font: 400 15pt 'Libre Baskerville', serif; letter-spacing: .32em; padding-left: .32em; }
+    .corazon { width: 9px; height: 9px; margin-top: 8px; fill: var(--oro); }
+    .numero { margin-top: .18in; font: 400 96pt/1 'Sacramento', cursive; color: var(--tinta); }
+    .linea { display: flex; align-items: center; gap: 8px; margin-top: .22in; width: 1.7in; }
+    .linea i { flex: 1; height: .6px; background: var(--oro); opacity: .8; }
+    .novios { margin-top: .16in; font: 400 9.5pt 'Libre Baskerville', serif; letter-spacing: .16em; }
+    .fecha { margin-top: .07in; font: 400 7pt 'Libre Baskerville', serif; letter-spacing: .12em; }
+
+    /* vuelta */
+    .vuelta .contenido { padding: 0 .35in; }
+    .v-k { margin-top: 1.05in; font: 400 10pt 'Libre Baskerville', serif; letter-spacing: .3em; padding-left: .3em; }
+    .v-t { margin-top: .04in; font: 400 34pt/1.05 'MonteCarlo', cursive; color: var(--tinta); }
+    .v-txt { margin-top: .1in; font: italic 400 9pt/1.6 'Libre Baskerville', serif; }
+    .qr { margin-top: .16in; padding: .09in; background: #fff; border-radius: 8px; box-shadow: 0 0 0 .6px rgba(184, 137, 74, .7); }
+    .qr img, .qr canvas { display: block; width: 1.55in !important; height: 1.55in !important; }
+    .v-paso { margin-top: .12in; font: 500 7.5pt 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+    .v-mesa { margin-top: .05in; font: 400 8pt 'Libre Baskerville', serif; letter-spacing: .14em; }
+
+    /* marcas de corte en las esquinas de cada tarjeta */
+    .marca { position: absolute; width: 14px; height: 14px; border-color: #b9b2a6; border-style: solid; border-width: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .controles, .ayuda { display: none; }
+      .hoja { margin: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="controles">
+    <h1>Tarjetas de mesa</h1>
+    <label>Imprimir
+      <select id="modo">
+        <option value="ambas">Frente y vuelta (doble cara)</option>
+        <option value="frente">Solo frentes</option>
+        <option value="vuelta">Solo vueltas (QR)</option>
+      </select>
+    </label>
+    <label>Mesas <input id="numeros" placeholder="1-25 o 1,2,5"></label>
+    <button type="button" id="imprimir">Imprimir</button>
+  </div>
+  <p class="ayuda">
+    Cada tarjeta mide <b>4 × 6 pulgadas</b> (10 × 15 cm), dos por hoja tamaño carta horizontal. Imprime en cartulina color marfil o blanca,
+    con <b>escala 100 %</b> y <b>sin márgenes</b>. Para doble cara elige <b>“Voltear por el borde corto”</b>: la vuelta de cada mesa
+    queda justo detrás de su frente. Si tu impresora no imprime doble cara, usa “Solo frentes”, vuelve a meter las hojas y luego “Solo vueltas”.
+    El QR abre la cámara para que los invitados te manden sus fotos de esa mesa.
+  </p>
+  <div id="hojas"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const SITIO = 'https://miinva-pgkvkj-d01c0.web.app/';
+    const $ = (s) => document.querySelector(s);
+    const params = new URLSearchParams(location.search);
+
+    function leerNumeros(txt) {
+      const out = new Set();
+      String(txt || '').split(',').forEach((p) => {
+        const [a, b] = p.split('-').map((x) => parseInt(x, 10));
+        if (Number.isFinite(a) && Number.isFinite(b)) for (let i = Math.min(a, b); i <= Math.max(a, b) && i - a < 300; i++) out.add(i);
+        else if (Number.isFinite(a)) out.add(a);
+      });
+      return [...out].filter((n) => n > 0 && n <= 200).sort((x, y) => x - y);
+    }
+
+    // ---------- adornos: ramas de hojas tipo acuarela y salpicado dorado ----------
+    let semilla = 7;
+    const azar = () => { semilla = (semilla * 9301 + 49297) % 233280; return semilla / 233280; };
+    function rama(x0, y0, largo, giro, curva, n, tam, espejo = 1) {
+      const pts = [];
+      let out = '';
+      for (let i = 0; i <= 24; i++) {
+        const t = i / 24;
+        pts.push([t * largo, -Math.sin(t * Math.PI * .9) * curva]);
+      }
+      const d = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join('');
+      out += `<path d="${d}" fill="none" stroke="#7f8d6c" stroke-width=".9" stroke-opacity=".8"/>`;
+      for (let i = 0; i < n; i++) {
+        const t = .08 + (i / (n - 1)) * .9;
+        const x = t * largo, y = -Math.sin(t * Math.PI * .9) * curva;
+        const tang = Math.atan2(-Math.cos(t * Math.PI * .9) * curva * Math.PI * .9, largo) * 180 / Math.PI;
+        const lado = i % 2 ? 1 : -1;
+        const s = tam * (1 - t * .45) * (.85 + azar() * .3);
+        const ang = tang + lado * (42 + azar() * 14);
+        const tono = ['#93a17f', '#a3b08f', '#7f8f6d', '#b2bd9f'][Math.floor(azar() * 4)];
+        out += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})">
+          <path d="M0 0 C${s * .3} ${-s * .32} ${s * .78} ${-s * .3} ${s} 0 C${s * .78} ${s * .3} ${s * .3} ${s * .32} 0 0Z" fill="${tono}" fill-opacity="${(.62 + azar() * .3).toFixed(2)}"/>
+          <path d="M${s * .08} 0 L${s * .9} 0" stroke="#f1efe4" stroke-width=".5" stroke-opacity=".7"/></g>`;
+      }
+      // brote final
+      out += `<circle cx="${largo + 2}" cy="0" r="1.6" fill="#93a17f" fill-opacity=".8"/>`;
+      return `<g transform="translate(${x0} ${y0}) scale(${espejo} 1) rotate(${giro})">${out}</g>`;
+    }
+    function salpicado(cx, cy, r, n) {
+      let out = '';
+      for (let i = 0; i < n; i++) {
+        const a = azar() * Math.PI * 2, d = Math.sqrt(azar()) * r;
+        out += `<circle cx="${(cx + Math.cos(a) * d).toFixed(1)}" cy="${(cy + Math.sin(a) * d).toFixed(1)}" r="${(azar() * 1.5 + .3).toFixed(2)}" fill="#c69a55" fill-opacity="${(.35 + azar() * .5).toFixed(2)}"/>`;
+      }
+      return out;
+    }
+    // Coordenadas en "puntos" de una tarjeta de 288 × 432 (4 × 6 in a 72 por pulgada)
+    function decoFrente(n) {
+      semilla = 11 + n * 3;
+      return `<svg class="deco" viewBox="0 0 288 432" aria-hidden="true">
+        ${rama(20, 215, 150, -64, 26, 13, 25)}
+        ${rama(24, 222, 74, -86, 10, 7, 18)}
+        ${salpicado(232, 95, 24, 26)}
+        ${rama(262, 405, 82, -128, -12, 8, 17)}
+        ${salpicado(40, 360, 22, 20)}
+      </svg>`;
+    }
+    function decoVuelta(n) {
+      semilla = 101 + n * 5;
+      return `<svg class="deco" viewBox="0 0 288 432" aria-hidden="true">
+        ${rama(258, 120, 100, -122, -16, 9, 19)}
+        ${salpicado(52, 92, 22, 22)}
+        ${rama(24, 410, 76, -50, 10, 7, 16)}
+        ${salpicado(246, 372, 20, 18)}
+      </svg>`;
+    }
+    const corazon = '<svg class="corazon" viewBox="0 0 10 9"><path d="M5 9 0.8 4.7A2.6 2.6 0 0 1 5 1.3a2.6 2.6 0 0 1 4.2 3.4Z"/></svg>';
+
+    function frente(n) {
+      return `<div class="tarjeta frente">${decoFrente(n)}
+        <div class="contenido">
+          <div class="mesa-k">MESA</div>${corazon}
+          <div class="numero">${n}</div>
+          <div class="linea"><i></i>${corazon.replace('class="corazon"', 'class="corazon" style="margin:0"')}<i></i></div>
+          <div class="novios">CARLOS &amp; MONSE</div>
+          <div class="fecha">19/12/2026</div>
+        </div></div>`;
+    }
+    function vuelta(n) {
+      return `<div class="tarjeta vuelta">${decoVuelta(n)}
+        <div class="contenido">
+          <div class="v-k">MESA ${n}</div>
+          <div class="v-t">Comparte tus fotos</div>
+          <div class="v-txt">Escanea el código con la cámara de tu celular y guarda con nosotros los momentos de esta noche.</div>
+          <div class="qr" data-mesa="${n}"></div>
+          <div class="v-paso">Escanea · toma la foto · listo</div>
+          <div class="v-mesa">Carlos &amp; Monse</div>
+        </div></div>`;
+    }
+
+    function pintar() {
+      const numeros = leerNumeros($('#numeros').value) ;
+      const modo = $('#modo').value;
+      const pares = [];
+      for (let i = 0; i < numeros.length; i += 2) pares.push([numeros[i], numeros[i + 1]]);
+      const hojas = [];
+      pares.forEach(([a, b]) => {
+        if (modo !== 'vuelta') hojas.push(`<section class="hoja">${frente(a)}${b ? frente(b) : '<div class="hueco"></div>'}</section>`);
+        // vuelta en espejo: al voltear por el borde corto, la izquierda queda a la derecha
+        if (modo !== 'frente') hojas.push(`<section class="hoja">${b ? vuelta(b) : '<div class="hueco"></div>'}${vuelta(a)}</section>`);
+      });
+      $('#hojas').innerHTML = hojas.join('') || '<p class="ayuda">Escribe los números de mesa arriba.</p>';
+      document.querySelectorAll('.qr').forEach((el) => {
+        // eslint-disable-next-line no-new
+        new QRCode(el, { text: `${SITIO}fotos.html?mesa=${el.dataset.mesa}`, width: 300, height: 300, colorDark: '#4f4a43', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+      });
+    }
+
+    $('#numeros').value = params.get('n') || '1-25';
+    $('#modo').addEventListener('change', pintar);
+    $('#numeros').addEventListener('change', pintar);
+    $('#imprimir').addEventListener('click', () => window.print());
+    document.fonts.ready.then(pintar);
+  </script>
+</body>
+</html>

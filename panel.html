@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="css/panel.css?v=23">
+  <link rel="stylesheet" href="css/panel.css?v=24">
 </head>
 <body>
   <header class="barra">
@@ -52,9 +52,28 @@
       <button type="button" class="pestana" data-modo="mesas"><i class="fa-solid fa-chair"></i> Mesas</button>
       <button type="button" class="pestana" data-modo="gastos"><i class="fa-solid fa-sack-dollar"></i> Gastos</button>
       <button type="button" class="pestana" data-modo="calc"><i class="fa-solid fa-calculator"></i> Calcular</button>
+      <button type="button" class="pestana" data-modo="fotos"><i class="fa-solid fa-camera"></i> Fotos</button>
     </nav>
 
     <!-- ============ CALCULADORA: lista de compras contra el efectivo disponible ============ -->
+    <!-- ============ FOTOS que mandan los invitados desde el QR de su mesa ============ -->
+    <div data-solo="fotos" hidden>
+      <section class="resumen" id="fotos-resumen"></section>
+      <section class="caja">
+        <div class="mesas-barra">
+          <h2 class="caja-t">Fotos de los invitados</h2>
+          <div class="acciones">
+            <a class="b b-sec" id="fotos-prueba" target="_blank" rel="noopener"><i class="fa-solid fa-camera"></i> Probar la cámara</a>
+            <button type="button" class="b b-pri" id="fotos-zip"><i class="fa-solid fa-file-zipper"></i> Descargar .zip</button>
+          </div>
+        </div>
+        <p class="ayuda">Llegan al momento cuando tus invitados escanean el QR de la tarjeta de su mesa. Toca una foto para verla grande,
+          descargarla o borrarla. El .zip baja todas (o solo las de la mesa que elijas), separadas en carpetas por mesa.</p>
+        <div class="filtros" id="fotos-filtros"></div>
+        <div class="fotos-grid" id="fotos-grid"></div>
+      </section>
+    </div>
+
     <div data-solo="calc" id="vista-calc" hidden>
       <section class="resumen" id="calc-resumen"></section>
       <section class="caja">
@@ -179,6 +198,7 @@
             </select>
             <button type="button" class="b b-pri" id="btn-nueva-mesa"><i class="fa-solid fa-plus"></i> Agregar mesa</button>
             <button type="button" class="b b-sec" id="exportar-mesas"><i class="fa-solid fa-file-excel"></i> Excel de mesas</button>
+            <button type="button" class="b b-sec" id="imprimir-tarjetas"><i class="fa-solid fa-print"></i> Tarjetas de mesa con QR</button>
           </div>
         </div>
         <p class="ayuda">Toca una mesa para ver y editar a sus invitados, o un elemento (pista, baños…) para renombrarlo.
@@ -373,6 +393,17 @@
 
   <!-- Pago o abono rápido -->
   <!-- Recibo de la cotización por WhatsApp -->
+  <!-- Foto en grande -->
+  <dialog id="dlg-foto" class="ancho dlg-foto">
+    <img id="foto-grande" alt="">
+    <p class="ayuda" id="foto-info"></p>
+    <div class="dlg-botones">
+      <button type="button" class="b b-sec" id="borrar-foto"><i class="fa-solid fa-trash"></i> Borrar</button>
+      <button type="button" class="b b-sec" id="cerrar-foto">Cerrar</button>
+      <button type="button" class="b b-pri" id="bajar-foto"><i class="fa-solid fa-download"></i> Descargar</button>
+    </div>
+  </dialog>
+
   <dialog id="dlg-recibo" class="ancho">
     <form id="form-recibo">
       <h2><i class="fa-brands fa-whatsapp"></i> Enviar recibo</h2>
@@ -408,6 +439,6 @@
   <div class="toast" id="toast" role="status" hidden></div>
 
   <script src="js/config.js?v=13"></script>
-  <script type="module" src="js/panel.js?v=22"></script>
+  <script type="module" src="js/panel.js?v=23"></script>
 </body>
 </html>

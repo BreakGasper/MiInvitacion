@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prueba · Fotos</title>
+  <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../css/panel.css?v=23">
+  <script type="importmap">
+    { "imports": { "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js": "./mock-db.js" } }
+  </script>
+</head>
+<body>
+  <main id="contenedor"><p>Cargando…</p></main>
+  <div class="toast" id="toast" hidden></div>
+  <script type="module">
+    // Copia el marcado de la sección Gastos del panel real y la inicia con datos de prueba
+    const html = await fetch('../panel.html').then((r) => r.text());
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const seccion = doc.querySelector('[data-solo="fotos"]');
+    seccion.hidden = false;
+    document.getElementById('contenedor').replaceChildren(seccion);
+    document.body.append(doc.getElementById('dlg-foto'));
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const toast = (m) => { const t = document.getElementById('toast'); t.textContent = m; t.hidden = false; setTimeout(() => { t.hidden = true; }, 2000); };
+    // fotos de prueba dibujadas al momento
+    const { ref } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js');
+    const dibujar = (txt, color, w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.fillStyle = color; x.fillRect(0, 0, w, h); x.fillStyle = '#fff'; x.font = `${w / 6}px sans-serif`; x.fillText(txt, w / 10, h / 2); return c.toDataURL('image/jpeg', .7); };
+    window.__datos.fotos = {}; window.__datos.fotosImg = {};
+    [[1, 'Ana', '#8c9a78'], [1, '', '#b3813d'], [5, 'Luis', '#1f3557'], [12, 'Paty', '#a6452a'], [0, '', '#55585e']].forEach(([mesa, nombre, color], i) => {
+      const id = `f${i}`;
+      window.__datos.fotos[id] = { mesa, thumb: dibujar(`Mesa ${mesa}`, color, 300, 300), fecha: Date.now() - i * 60000, w: 1200, h: 900, ...(nombre ? { nombre } : {}) };
+      window.__datos.fotosImg[id] = dibujar(`Grande ${mesa}`, color, 1200, 900);
+    });
+    const { iniciarFotos } = await import('../js/fotos.js');
+    iniciarFotos({ db: {}, esc, toast });
+  </script>
+</body>
+</html>

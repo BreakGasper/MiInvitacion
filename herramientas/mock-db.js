@@ -19,3 +19,4 @@ export function push(r) { const key = `n${Math.random().toString(36).slice(2, 8)
 export async function remove(r) { escribir(r.p, null); avisar(); }
 export const serverTimestamp = () => Date.now();
 window.__datos = datos;
+export async function get(r) { const v = structuredClone(leer(r.p)); return { val: () => v, exists: () => v != null }; }
