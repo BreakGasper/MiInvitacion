@@ -56,10 +56,12 @@
     .contenido { position: absolute; inset: .1in; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
     /* frente */
-    .mesa-k { margin-top: 1.55in; font: 400 15pt 'Libre Baskerville', serif; letter-spacing: .32em; padding-left: .32em; }
+    .frente .contenido { padding-bottom: 1.05in; }          /* el bloque de nombres queda más abajo */
+    .mesa-k { margin-top: 1.12in; font: 400 15pt 'Libre Baskerville', serif; letter-spacing: .32em; padding-left: .32em; }
     .corazon { width: 9px; height: 9px; margin-top: 8px; fill: var(--oro); }
-    .numero { margin-top: .18in; font: 400 96pt/1 'Sacramento', cursive; color: var(--tinta); }
-    .linea { display: flex; align-items: center; gap: 8px; margin-top: .22in; width: 1.7in; }
+    .numero { margin-top: .12in; font: 400 126pt/1 'Sacramento', cursive; color: var(--tinta); }
+    .numero.dos { font-size: 100pt; margin-top: .28in; }   /* 10 a 99: un poco más chico para no tocar la rama */
+    .linea { display: flex; align-items: center; gap: 8px; margin-top: auto; width: 1.7in; }
     .linea i { flex: 1; height: .6px; background: var(--oro); opacity: .8; }
     .novios { margin-top: .16in; font: 400 9.5pt 'Libre Baskerville', serif; letter-spacing: .16em; }
     .fecha { margin-top: .07in; font: 400 7pt 'Libre Baskerville', serif; letter-spacing: .12em; }
@@ -76,7 +78,7 @@
 
     /* rama de olivo en acuarela (PNG transparente) */
     .olivo { position: absolute; height: auto; pointer-events: none; }
-    .o1 { width: 1.25in; left: .02in; top: .52in; transform: rotate(14deg); transform-origin: 0 100%; }
+    .o1 { width: 1.08in; left: .04in; top: .36in; transform: rotate(14deg); transform-origin: 0 100%; }
     .o2 { width: .78in; right: .08in; bottom: .12in; transform: scaleX(-1) rotate(18deg); }
     .o3 { width: .82in; right: .02in; top: .28in; transform: scaleX(-1) rotate(16deg); transform-origin: 50% 100%; }
     .o4 { width: .72in; left: .1in; bottom: .12in; transform: rotate(16deg); }
@@ -192,7 +194,7 @@
       return `<div class="tarjeta frente">${decoFrente(n)}
         <div class="contenido">
           <div class="mesa-k">MESA</div>${corazon}
-          <div class="numero">${n}</div>
+          <div class="numero ${String(n).length > 1 ? 'dos' : ''}">${n}</div>
           <div class="linea"><i></i>${corazon.replace('class="corazon"', 'class="corazon" style="margin:0"')}<i></i></div>
           <div class="novios">CARLOS &amp; MONSE</div>
           <div class="fecha">19/12/2026</div>
