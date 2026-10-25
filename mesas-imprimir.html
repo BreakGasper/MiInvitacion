@@ -65,6 +65,13 @@
     .v-paso { margin-top: .12in; font: 500 7.5pt 'Montserrat', sans-serif; letter-spacing: .14em; text-transform: uppercase; }
     .v-mesa { margin-top: .05in; font: 400 8pt 'Libre Baskerville', serif; letter-spacing: .14em; }
 
+    /* rama de olivo en acuarela (PNG transparente) */
+    .olivo { position: absolute; height: auto; pointer-events: none; }
+    .o1 { width: 1.25in; left: -.08in; top: .42in; transform: rotate(14deg); transform-origin: 0 100%; }
+    .o2 { width: .78in; right: -.02in; bottom: .02in; transform: scaleX(-1) rotate(18deg); }
+    .o3 { width: .82in; right: -.08in; top: .18in; transform: scaleX(-1) rotate(16deg); transform-origin: 50% 100%; }
+    .o4 { width: .72in; left: 0; bottom: .02in; transform: rotate(16deg); }
+
     /* marcas de corte en las esquinas de cada tarjeta */
     .marca { position: absolute; width: 14px; height: 14px; border-color: #b9b2a6; border-style: solid; border-width: 0; }
 
@@ -152,21 +159,20 @@
     function decoFrente(n) {
       semilla = 11 + n * 3;
       return `<svg class="deco" viewBox="0 0 288 432" aria-hidden="true">
-        ${rama(20, 215, 150, -64, 26, 13, 25)}
-        ${rama(24, 222, 74, -86, 10, 7, 18)}
         ${salpicado(232, 95, 24, 26)}
-        ${rama(262, 405, 82, -128, -12, 8, 17)}
         ${salpicado(40, 360, 22, 20)}
-      </svg>`;
+      </svg>
+      <img class="olivo o1" src="img/rama-olivo.png" alt="">
+      <img class="olivo o2" src="img/rama-olivo.png" alt="">`;
     }
     function decoVuelta(n) {
       semilla = 101 + n * 5;
       return `<svg class="deco" viewBox="0 0 288 432" aria-hidden="true">
-        ${rama(258, 120, 100, -122, -16, 9, 19)}
         ${salpicado(52, 92, 22, 22)}
-        ${rama(24, 410, 76, -50, 10, 7, 16)}
         ${salpicado(246, 372, 20, 18)}
-      </svg>`;
+      </svg>
+      <img class="olivo o3" src="img/rama-olivo.png" alt="">
+      <img class="olivo o4" src="img/rama-olivo.png" alt="">`;
     }
     const corazon = '<svg class="corazon" viewBox="0 0 10 9"><path d="M5 9 0.8 4.7A2.6 2.6 0 0 1 5 1.3a2.6 2.6 0 0 1 4.2 3.4Z"/></svg>';
 
