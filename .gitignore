@@ -16,3 +16,6 @@ package-lock.json
 # Versiones de la canción que ya no se usan (la que suena es mmxx-instrumental-suave.mp3)
 musica/*
 !musica/mmxx-instrumental-suave.mp3
+
+# PDFs generados para imprimir
+impresion/

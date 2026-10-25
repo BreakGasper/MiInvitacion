@@ -211,6 +211,7 @@
     }
 
     $('#numeros').value = params.get('n') || '1-25';
+    if (['ambas', 'frente', 'vuelta'].includes(params.get('modo'))) $('#modo').value = params.get('modo');
     $('#modo').addEventListener('change', pintar);
     $('#numeros').addEventListener('change', pintar);
     $('#imprimir').addEventListener('click', () => window.print());
