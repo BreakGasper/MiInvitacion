@@ -32,19 +32,21 @@
     @page { size: letter landscape; margin: 0; }
     .hoja {
       position: relative; width: 11in; height: 8.5in; margin: 16px auto; background: #fff;
-      display: flex; align-items: center; justify-content: center; gap: .9in;
+      display: flex; align-items: center; justify-content: center; gap: .7in;
       box-shadow: 0 4px 18px rgba(0, 0, 0, .12); overflow: hidden; break-after: page;
     }
-    .hueco { width: 4in; height: 6in; }
+    /* La tarjeta se corta a 4 × 6 in; el fondo sigue 0.1 in más (sangrado) para que,
+       si la vuelta se mueve un poco al imprimir, no aparezca una orilla blanca al recortar */
+    .hueco { width: 4.2in; height: 6.2in; }
     .tarjeta {
-      position: relative; width: 4in; height: 6in; overflow: hidden;
-      background: var(--papel); border-radius: 2in 2in 0 0;
+      position: relative; width: 4.2in; height: 6.2in; overflow: hidden;
+      background: var(--papel); border-radius: 2.1in 2.1in 0 0;
       -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     /* contorno de corte muy tenue */
-    .tarjeta::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .18); pointer-events: none; }
-    .tarjeta svg.deco { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .contenido { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .tarjeta::after { content: ''; position: absolute; inset: .1in; border-radius: 2in 2in 0 0; box-shadow: 0 0 0 .5px rgba(0, 0, 0, .22); pointer-events: none; }
+    .tarjeta svg.deco { position: absolute; left: .1in; top: .1in; width: 4in; height: 6in; }
+    .contenido { position: absolute; inset: .1in; display: flex; flex-direction: column; align-items: center; text-align: center; }
 
     /* frente */
     .mesa-k { margin-top: 1.55in; font: 400 15pt 'Libre Baskerville', serif; letter-spacing: .32em; padding-left: .32em; }
@@ -67,10 +69,10 @@
 
     /* rama de olivo en acuarela (PNG transparente) */
     .olivo { position: absolute; height: auto; pointer-events: none; }
-    .o1 { width: 1.25in; left: -.08in; top: .42in; transform: rotate(14deg); transform-origin: 0 100%; }
-    .o2 { width: .78in; right: -.02in; bottom: .02in; transform: scaleX(-1) rotate(18deg); }
-    .o3 { width: .82in; right: -.08in; top: .18in; transform: scaleX(-1) rotate(16deg); transform-origin: 50% 100%; }
-    .o4 { width: .72in; left: 0; bottom: .02in; transform: rotate(16deg); }
+    .o1 { width: 1.25in; left: .02in; top: .52in; transform: rotate(14deg); transform-origin: 0 100%; }
+    .o2 { width: .78in; right: .08in; bottom: .12in; transform: scaleX(-1) rotate(18deg); }
+    .o3 { width: .82in; right: .02in; top: .28in; transform: scaleX(-1) rotate(16deg); transform-origin: 50% 100%; }
+    .o4 { width: .72in; left: .1in; bottom: .12in; transform: rotate(16deg); }
 
     /* marcas de corte en las esquinas de cada tarjeta */
     .marca { position: absolute; width: 14px; height: 14px; border-color: #b9b2a6; border-style: solid; border-width: 0; }
@@ -96,7 +98,7 @@
     <button type="button" id="imprimir">Imprimir</button>
   </div>
   <p class="ayuda">
-    Cada tarjeta mide <b>4 × 6 pulgadas</b> (10 × 15 cm), dos por hoja tamaño carta horizontal. Imprime en cartulina color marfil o blanca,
+    Cada tarjeta mide <b>4 × 6 pulgadas</b> (10 × 15 cm) al recortarla por la <b>línea gris tenue</b>; el fondo sigue unos milímetros más (sangrado) para que no quede orilla blanca. Dos por hoja tamaño carta horizontal. Imprime en cartulina color marfil o blanca,
     con <b>escala 100 %</b> y <b>sin márgenes</b>. Para doble cara elige <b>“Voltear por el borde corto”</b>: la vuelta de cada mesa
     queda justo detrás de su frente. Si tu impresora no imprime doble cara, usa “Solo frentes”, vuelve a meter las hojas y luego “Solo vueltas”.
     El QR abre la cámara para que los invitados te manden sus fotos de esa mesa.
