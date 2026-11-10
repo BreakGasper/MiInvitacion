@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="css/panel.css?v=24">
+  <link rel="stylesheet" href="css/panel.css?v=25">
 </head>
 <body>
   <header class="barra">
@@ -53,7 +53,27 @@
       <button type="button" class="pestana" data-modo="gastos"><i class="fa-solid fa-sack-dollar"></i> Gastos</button>
       <button type="button" class="pestana" data-modo="calc"><i class="fa-solid fa-calculator"></i> Calcular</button>
       <button type="button" class="pestana" data-modo="fotos"><i class="fa-solid fa-camera"></i> Fotos</button>
+      <button type="button" class="pestana" data-modo="pend"><i class="fa-solid fa-list-check"></i> Pendientes</button>
     </nav>
+
+    <!-- ============ PENDIENTES: listas de cosas por hacer ============ -->
+    <div data-solo="pend" hidden>
+      <section class="resumen" id="pend-resumen"></section>
+      <section class="caja">
+        <h2 class="caja-t">Lista de pendientes</h2>
+        <p class="ayuda">Crea una lista por tema (ej. “Antes de la boda”, “Día del evento”), agrega lo que falta y márcalo cuando esté listo.</p>
+        <form class="ac-nuevo" id="pend-nueva-lista">
+          <input name="nombre" maxlength="60" placeholder="Nombre de la nueva lista" aria-label="Nombre de la nueva lista" autocomplete="off">
+          <button type="submit" class="b b-pri"><i class="fa-solid fa-plus"></i> Crear lista</button>
+        </form>
+        <div class="filtros" id="pend-filtros">
+          <button type="button" class="chip activo" data-pf="todos">Todos</button>
+          <button type="button" class="chip" data-pf="pend">Pendientes</button>
+          <button type="button" class="chip" data-pf="hechos">Terminados</button>
+        </div>
+      </section>
+      <div id="pend-listas"></div>
+    </div>
 
     <!-- ============ CALCULADORA: lista de compras contra el efectivo disponible ============ -->
     <!-- ============ FOTOS que mandan los invitados desde el QR de su mesa ============ -->
@@ -439,6 +459,6 @@
   <div class="toast" id="toast" role="status" hidden></div>
 
   <script src="js/config.js?v=13"></script>
-  <script type="module" src="js/panel.js?v=23"></script>
+  <script type="module" src="js/panel.js?v=24"></script>
 </body>
 </html>

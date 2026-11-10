@@ -102,6 +102,10 @@
       ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
       ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
     },
+    "pendientes": {
+      ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
+      ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true"
+    },
     "fotos": {
       ".read": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",
       ".write": "auth != null && auth.token.email.endsWith('@boda.example.com') && root.child('admins').child(auth.token.email.replace('@boda.example.com', '')).val() == true",

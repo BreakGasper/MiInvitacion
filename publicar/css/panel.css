@@ -342,10 +342,6 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
   .calc-cab { display: grid; }
   .calc-nueva { grid-template-areas: "chk con can pre btn btn"; }
 }
-@media (max-width: 480px) {
-  .pestanas { gap: 4px; }
-  .pestana { padding: 9px 4px; gap: 5px; font-size: 13px; }
-}
 .calc-fila { grid-template-columns: 24px 1fr 1fr auto; }
 .calc-fila [data-quitar] { justify-self: end; }
 @media (min-width: 640px) { .calc-fila { grid-template-columns: 24px 1fr 90px 120px 120px 40px; } }
@@ -384,4 +380,43 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
 }
 .dlg-foto { width: min(96vw, 900px); }
 .dlg-foto img { display: block; width: 100%; max-height: 72vh; object-fit: contain; border-radius: 10px; background: #111; }
-@media (max-width: 420px) { .pestana i { display: none; } }
+
+/* ============ PENDIENTES ============ */
+.pd-lista { padding: 12px; }
+.pd-cab { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.pd-plegar { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 8px 4px; border: 0; background: none; text-align: left; font-weight: 600; font-size: 16px; color: var(--texto); }
+.pd-plegar i { color: var(--oro); width: 14px; }
+.pd-nombre { overflow-wrap: anywhere; }
+.pd-lista.completa { border-left: 4px solid var(--si); }
+.pd-lista.completa .barra-prog span { background: var(--si); }
+.pd-items { list-style: none; margin: 10px 0 0; padding: 0; }
+.pd-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--linea); }
+.pd-item:last-child { border-bottom: 0; }
+.pd-check { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; padding: 8px 0; cursor: pointer; }
+.pd-check input { flex: none; width: 24px; height: 24px; accent-color: var(--si); }
+.pd-texto { overflow-wrap: anywhere; }
+.pd-item.hecho .pd-texto { color: var(--suave); text-decoration: line-through; }
+.pd-fecha { flex: none; font-size: 12px; color: var(--suave); }
+.pd-item .b-ico { flex: none; min-width: 40px; min-height: 40px; justify-content: center; }
+.pd-vacio { list-style: none; padding: 16px 0; }
+.pd-nuevo { display: flex; gap: 8px; margin-top: 10px; }
+.pd-nuevo input, #pend-nueva-lista input { font-size: 16px; } /* 16px evita el zoom automático en iPhone */
+.pd-nuevo input { flex: 1; min-width: 0; padding: 11px 12px; border: 1px solid var(--linea); border-radius: 10px; font-family: inherit; color: var(--texto); }
+.pd-nuevo .b { justify-content: center; min-width: 44px; }
+.pd-limpiar { margin-top: 10px; padding: 8px 4px; border: 0; background: none; color: var(--suave); font-size: 13px; text-decoration: underline; }
+#pend-filtros { margin-top: 4px; }
+
+/* ============ AJUSTES PARA CELULAR (solo el panel) ============ */
+@media (max-width: 560px) {
+  main { padding: 12px; }
+  .barra { padding: 12px; }
+  .barra-t { font-size: 30px; }
+  .pestanas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .pestana { flex-direction: column; gap: 3px; padding: 9px 2px; font-size: 12px; }
+  .pestana i { font-size: 17px; }
+  .caja { padding: 12px; }
+  .pd-btn-t { display: none; }
+  .dos { grid-template-columns: 1fr; }
+  .dlg-botones { flex-wrap: wrap; }
+  .toast { max-width: 92vw; text-align: center; }
+}
