@@ -10,7 +10,7 @@ import { iniciarMesas } from './mesas.js?v=5';
 import { iniciarGastos } from './gastos.js?v=2';
 import { iniciarCalculadora } from './calculadora.js?v=7';
 import { iniciarFotos } from './fotos.js?v=1';
-import { iniciarPendientes } from './pendientes.js?v=1';
+import { iniciarPendientes } from './pendientes.js?v=2';
 
 const C = window.INVITACION;
 const app = initializeApp(C.firebase);

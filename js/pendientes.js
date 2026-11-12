@@ -14,7 +14,9 @@ export function iniciarPendientes({ db, esc, toast }) {
     pintar();
   });
 
-  const items = (l) => Object.entries(l.items || {}).sort(([, a], [, b]) => (a.creado || 0) - (b.creado || 0));
+  // Los pendientes van en el orden en que se agregaron; los terminados se mandan al final (en el orden en que se terminaron)
+  const items = (l) => Object.entries(l.items || {}).sort(([, a], [, b]) => (!!a.hecho - !!b.hecho)
+    || (a.hecho ? (a.fechaHecho || 0) - (b.fechaHecho || 0) : (a.creado || 0) - (b.creado || 0)));
   const cuenta = (l) => {
     const it = items(l);
     return { total: it.length, hechos: it.filter(([, x]) => x.hecho).length };
@@ -52,14 +54,14 @@ export function iniciarPendientes({ db, esc, toast }) {
         </div>
         <div class="barra-prog"><span style="width:${pct}%"></span></div>
         ${cerrada ? '' : `
-          <ul class="pd-items">
-            ${visibles.length ? visibles.map(([id, x]) => filaItem(lid, id, x)).join('')
-    : `<li class="vacio pd-vacio">${total ? (st.filtro === 'pend' ? '¡Todo terminado en esta lista! 🎉' : 'Nada terminado todavía.') : 'Sin pendientes. Agrega el primero.'}</li>`}
-          </ul>
           <form class="pd-nuevo" data-l="${esc(lid)}">
-            <input name="texto" maxlength="120" placeholder="Agregar pendiente…" aria-label="Nuevo pendiente" autocomplete="off" value="${esc(st.borradores[lid] || '')}">
+            <input name="texto" maxlength="120" placeholder="Escribe un pendiente y toca +" aria-label="Nuevo pendiente" autocomplete="off" enterkeyhint="done" value="${esc(st.borradores[lid] || '')}">
             <button type="submit" class="b b-pri" aria-label="Agregar pendiente"><i class="fa-solid fa-plus"></i><span class="pd-btn-t"> Agregar</span></button>
           </form>
+          <ul class="pd-items">
+            ${visibles.length ? visibles.map(([id, x]) => filaItem(lid, id, x)).join('')
+    : `<li class="vacio pd-vacio">${total ? (st.filtro === 'pend' ? '¡Todo terminado en esta lista! 🎉' : 'Nada terminado todavía.') : 'Sin pendientes. Escribe el primero arriba.'}</li>`}
+          </ul>
           ${hechos ? `<button type="button" class="pd-limpiar" data-a="limpiar" data-l="${esc(lid)}"><i class="fa-solid fa-broom"></i> Quitar los terminados (${hechos})</button>` : ''}`}
       </section>`;
   }
@@ -127,6 +129,7 @@ export function iniciarPendientes({ db, esc, toast }) {
     if (!texto) return;
     st.borradores[lid] = '';
     f.texto.value = '';
+    f.texto.focus(); // deja el cursor listo (y el teclado abierto en el celular) para escribir el siguiente
     guardar(() => set(push(ref(db, `pendientes/${lid}/items`)), { texto, hecho: false, creado: Date.now() }));
   });
   $('#pend-listas').addEventListener('input', (e) => {

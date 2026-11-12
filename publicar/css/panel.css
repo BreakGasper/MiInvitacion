@@ -399,7 +399,7 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
 .pd-fecha { flex: none; font-size: 12px; color: var(--suave); }
 .pd-item .b-ico { flex: none; min-width: 40px; min-height: 40px; justify-content: center; }
 .pd-vacio { list-style: none; padding: 16px 0; }
-.pd-nuevo { display: flex; gap: 8px; margin-top: 10px; }
+.pd-nuevo { display: flex; gap: 8px; margin-top: 12px; }
 .pd-nuevo input, #pend-nueva-lista input { font-size: 16px; } /* 16px evita el zoom automático en iPhone */
 .pd-nuevo input { flex: 1; min-width: 0; padding: 11px 12px; border: 1px solid var(--linea); border-radius: 10px; font-family: inherit; color: var(--texto); }
 .pd-nuevo .b { justify-content: center; min-width: 44px; }
