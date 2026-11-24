@@ -1,0 +1,32 @@
+name: Deploy a Firebase Hosting
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: firebase-hosting
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      # Copia a publicar/ los archivos de la raíz (invitados.js y datos privados NO se publican)
+      - name: Sincronizar publicar/
+        run: |
+          cp index.html panel.html fotos.html mesas-imprimir.html publicar/
+          cp css/*.css publicar/css/
+          for f in js/*.js; do
+            [ "$(basename "$f")" = "invitados.js" ] && continue
+            cp "$f" publicar/js/
+          done
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          create_credentials_file: true
+      - run: npx --yes firebase-tools@latest deploy --only hosting --project newagent-pgkvkj --non-interactive
+      - run: npx --yes firebase-tools@latest deploy --only database --project newagent-pgkvkj --non-interactive
