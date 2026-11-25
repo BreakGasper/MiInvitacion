@@ -408,12 +408,14 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
 #pend-filtros { margin-top: 4px; }
 
 /* ============ ITINERARIO ============ */
+.it-sub { margin: 0 0 12px; }
+.it-sub .chip { display: flex; justify-content: center; gap: 6px; align-items: center; }
 .it-nuevo { display: grid; grid-template-columns: 130px 1fr 1fr auto; gap: 8px; margin-top: 12px; }
 .it-nuevo input, .it-form input { font-size: 16px; padding: 11px 12px; border: 1px solid var(--linea); border-radius: 10px; font-family: inherit; color: var(--texto); min-width: 0; width: 100%; box-sizing: border-box; }
 .it-nuevo .b { justify-content: center; min-width: 44px; }
 .it-sig { font-size: 13px; color: var(--suave); }
-.it-vistas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-.it-vistas .chip { padding: 9px 12px; font-size: 14px; text-align: center; }
+.it-sub, .it-vistas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.it-sub .chip, .it-vistas .chip { padding: 9px 12px; font-size: 14px; text-align: center; }
 .it-extra { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; }
 .it-extra .chip { padding: 7px 12px; }
 .it-items { list-style: none; margin: 0; padding: 0; }
@@ -456,6 +458,35 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
   .tl::before { left: 74px; }
   .tl-item { grid-template-columns: 58px 32px 1fr; column-gap: 8px; }
   .tl-punto { width: 32px; height: 32px; }
+}
+/* canciones */
+.ca-nuevo { display: grid; grid-template-columns: 1fr 1fr 1.4fr auto; gap: 8px; margin-top: 12px; }
+.ca-nuevo input, .ca-nuevo select { font-size: 16px; padding: 11px 12px; border: 1px solid var(--linea); border-radius: 10px; font-family: inherit; color: var(--texto); min-width: 0; width: 100%; box-sizing: border-box; background: #fff; }
+.ca-nuevo .b { justify-content: center; }
+.ca-grupo { padding: 12px; }
+#ca-lista { margin-top: 14px; }
+.ca-grupo.sin { border-left: 4px solid var(--pend); }
+.ca-grupo-t { margin: 0 0 6px; font-size: 15px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ca-grupo-t i { color: var(--oro); }
+.ca-items { list-style: none; margin: 0; padding: 0; }
+.ca-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--linea); }
+.ca-item:last-child { border-bottom: 0; }
+.ca-ico { flex: none; color: var(--oro); width: 18px; text-align: center; }
+.ca-cuerpo { flex: 1; min-width: 0; }
+.ca-titulo { font-weight: 600; overflow-wrap: anywhere; }
+.ca-titulo a { color: inherit; }
+.ca-artista { font-size: 13px; color: var(--suave); overflow-wrap: anywhere; }
+.ca-item .b-ico { flex: none; min-width: 40px; min-height: 40px; justify-content: center; }
+#dlg-cancion select, #dlg-itin select { padding: 9px 10px; border: 1px solid var(--linea); border-radius: 8px; font: inherit; background: #fff; }
+@media (max-width: 560px) {
+  .ca-nuevo { grid-template-columns: 1fr 1fr; grid-template-areas: 'titulo titulo' 'artista artista' 'momento boton'; }
+  .ca-nuevo input[name="titulo"] { grid-area: titulo; }
+  .ca-nuevo input[name="artista"] { grid-area: artista; }
+  .ca-nuevo select { grid-area: momento; }
+  .ca-nuevo .b { grid-area: boton; }
+  #dlg-cancion .dlg-botones { display: grid; grid-template-columns: 1fr 1fr; }
+  #dlg-cancion .dlg-botones .b { justify-content: center; }
+  #dlg-cancion .dlg-botones [data-d="quitar"] { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
   .it-nuevo { grid-template-columns: 1fr 1fr; grid-template-areas: 'hora boton' 'momento momento' 'cancion cancion'; }

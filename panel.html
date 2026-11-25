@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="css/panel.css?v=31">
+  <link rel="stylesheet" href="css/panel.css?v=32">
 </head>
 <body>
   <header class="barra">
@@ -79,6 +79,11 @@
     <!-- ============ ITINERARIO: programa de la boda con la canción de cada momento ============ -->
     <div data-solo="itin" hidden>
       <section class="resumen" id="it-resumen"></section>
+      <div class="it-sub" id="it-sub">
+        <button type="button" class="chip activo" data-sub="prog"><i class="fa-solid fa-clock"></i> Programa</button>
+        <button type="button" class="chip" data-sub="can"><i class="fa-solid fa-music"></i> Canciones</button>
+      </div>
+      <div id="it-sub-prog">
       <section class="caja">
         <div class="mesas-barra">
           <h2 class="caja-t">Itinerario de la boda</h2>
@@ -106,6 +111,22 @@
         </div>
       </section>
       <section class="caja" id="it-lista"></section>
+      </div>
+
+      <!-- Canciones: cada una se asigna al momento en que va a sonar -->
+      <div id="it-sub-can" hidden>
+        <section class="caja">
+          <h2 class="caja-t">Canciones de la boda</h2>
+          <p class="ayuda">Agrega cada canción y elige en qué momento del itinerario va a sonar. Un momento puede tener varias canciones. Lo que no asignes queda en “Sin asignar”.</p>
+          <form class="ca-nuevo" id="ca-nuevo">
+            <input name="titulo" maxlength="100" placeholder="Canción (título)" required aria-label="Título de la canción" autocomplete="off">
+            <input name="artista" maxlength="80" placeholder="Artista (opcional)" aria-label="Artista" autocomplete="off">
+            <select name="momento" aria-label="Momento en que suena"></select>
+            <button type="submit" class="b b-pri"><i class="fa-solid fa-plus"></i> Agregar</button>
+          </form>
+        </section>
+        <div id="ca-lista"></div>
+      </div>
     </div>
 
     <!-- ============ CALCULADORA: lista de compras contra el efectivo disponible ============ -->
@@ -492,6 +513,6 @@
   <div class="toast" id="toast" role="status" hidden></div>
 
   <script src="js/config.js?v=13"></script>
-  <script type="module" src="js/panel.js?v=31"></script>
+  <script type="module" src="js/panel.js?v=32"></script>
 </body>
 </html>
