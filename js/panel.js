@@ -12,6 +12,9 @@ import { iniciarCalculadora } from './calculadora.js?v=7';
 import { iniciarFotos } from './fotos.js?v=1';
 import { iniciarPendientes } from './pendientes.js?v=2';
 import { iniciarItinerario } from './itinerario.js?v=3';
+import { iniciarJalarParaActualizar } from './jalar.js?v=1';
+
+iniciarJalarParaActualizar();
 
 const C = window.INVITACION;
 const app = initializeApp(C.firebase);
