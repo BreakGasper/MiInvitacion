@@ -431,6 +431,27 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
 .it-campos { display: grid; grid-template-columns: 130px 1fr; gap: 8px; }
 .it-botones { display: flex; gap: 8px; flex-wrap: wrap; }
 .it-vacio { list-style: none; padding: 16px 0; }
+.b-peligro { color: #a33; }
+/* línea del tiempo */
+.tl { list-style: none; margin: 0; padding: 4px 0; position: relative; }
+.tl::before { content: ''; position: absolute; left: 86px; top: 8px; bottom: 8px; width: 3px; background: var(--linea); border-radius: 2px; }
+.tl-item { display: grid; grid-template-columns: 70px 34px 1fr; column-gap: 10px; align-items: start; padding: 8px 0; position: relative; }
+.tl-hora { text-align: right; font-weight: 600; font-size: 13px; color: var(--oro); padding-top: 8px; }
+.tl-punto { width: 34px; height: 34px; border-radius: 50%; background: #fff; border: 2px solid var(--oro); color: var(--oro); display: grid; place-items: center; font-size: 14px; position: relative; z-index: 1; }
+.tl-tarjeta { display: grid; gap: 3px; text-align: left; border: 1px solid var(--linea); background: #fff; border-radius: 12px; padding: 9px 12px; font: inherit; color: var(--texto); min-width: 0; cursor: pointer; }
+.tl-momento { font-weight: 600; overflow-wrap: anywhere; }
+.tl-cancion { font-size: 13px; overflow-wrap: anywhere; }
+.tl-cancion i { color: var(--oro); }
+.tl-notas { font-size: 12px; color: var(--suave); overflow-wrap: anywhere; }
+.tl-item.hecho .tl-punto { background: var(--si); border-color: var(--si); color: #fff; }
+.tl-item.hecho .tl-momento, .tl-item.hecho .tl-hora { color: var(--suave); text-decoration: line-through; }
+.tl-item.sigue .tl-punto { background: var(--oro); color: #fff; box-shadow: 0 0 0 5px rgba(201, 154, 46, .25); }
+.tl-item.sigue .tl-tarjeta { border-color: var(--oro); }
+@media (max-width: 560px) {
+  .tl::before { left: 74px; }
+  .tl-item { grid-template-columns: 58px 32px 1fr; column-gap: 8px; }
+  .tl-punto { width: 32px; height: 32px; }
+}
 @media (max-width: 560px) {
   .it-nuevo { grid-template-columns: 1fr 1fr; }
   .it-nuevo input[name="momento"], .it-nuevo input[name="cancion"] { grid-column: 1 / -1; }

@@ -24,7 +24,8 @@ const PLANTILLA = [
 
 export function iniciarItinerario({ db, esc, toast }) {
   const $ = (s, r = document) => r.querySelector(s);
-  const st = { items: {}, editando: null, soloPend: false };
+  const st = { items: {}, editando: null, soloPend: false, vista: 'lista' };
+  try { if (localStorage.getItem('itinVista') === 'linea') st.vista = 'linea'; } catch { /* sin almacenamiento */ }
 
   onValue(ref(db, 'itinerario'), (snap) => {
     st.items = snap.val() || {};
@@ -43,6 +44,15 @@ export function iniciarItinerario({ db, esc, toast }) {
     const t = (((a * 60 + b + min) % 1440) + 1440) % 1440;
     return `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
   };
+  // Ícono de cada momento según lo que dice (Font Awesome)
+  const ICONOS = [
+    [/llegada|bienvenida a|registro/, 'fa-door-open'], [/palabras|bienvenida|discurso|mensaje/, 'fa-microphone'],
+    [/brindis/, 'fa-champagne-glasses'], [/cena|banquete|comida|taco|recena/, 'fa-utensils'],
+    [/pastel/, 'fa-cake-candles'], [/ramo|liga/, 'fa-seedling'], [/hora loca|cotill/, 'fa-masks-theater'],
+    [/baile abierto|pista/, 'fa-music'], [/vals|baile|bailar/, 'fa-heart'], [/entrada|entran|cortejo/, 'fa-people-arrows'],
+    [/foto/, 'fa-camera'], [/despedida|fin|cierre|recuerdo/, 'fa-moon'], [/musica|música|dj|canci/, 'fa-music'],
+  ];
+  const icono = (t) => (ICONOS.find(([re]) => re.test((t || '').toLowerCase())) || [0, 'fa-star'])[1];
   const urlOk = (u) => /^https?:\/\//i.test(u || '');
 
   function fila(id, x) {
@@ -80,6 +90,19 @@ export function iniciarItinerario({ db, esc, toast }) {
       </li>`;
   }
 
+  function filaLinea(id, x, sig) {
+    return `
+      <li class="tl-item ${x.hecho ? 'hecho' : ''} ${sig ? 'sigue' : ''}" data-id="${esc(id)}">
+        <div class="tl-hora">${esc(hora12(x.hora))}</div>
+        <div class="tl-punto"><i class="fa-solid ${icono(x.momento)}"></i></div>
+        <button type="button" class="tl-tarjeta" data-a="abrir" data-i="${esc(id)}" title="Editar">
+          <span class="tl-momento">${esc(x.momento)}</span>
+          ${x.cancion ? `<span class="tl-cancion"><i class="fa-solid fa-music"></i> ${esc(x.cancion)}</span>` : ''}
+          ${x.notas ? `<span class="tl-notas">${esc(x.notas)}</span>` : ''}
+        </button>
+      </li>`;
+  }
+
   function pintar() {
     const todos = orden();
     const hechos = todos.filter(([, x]) => x.hecho).length;
@@ -93,7 +116,12 @@ export function iniciarItinerario({ db, esc, toast }) {
     $('#it-siguiente').innerHTML = sig ? `<i class="fa-solid fa-forward"></i> Sigue: <b>${esc(hora12(sig[1].hora))}</b> · ${esc(sig[1].momento)}` : '';
     $('#it-solo-pend').classList.toggle('activo', st.soloPend);
 
+    document.querySelectorAll('[data-vista]').forEach((c) => c.classList.toggle('activo', c.dataset.vista === st.vista));
     const vis = st.soloPend ? todos.filter(([, x]) => !x.hecho) : todos;
+    if (st.vista === 'linea' && todos.length) {
+      $('#it-lista').innerHTML = `<ol class="tl">${vis.map(([id, x]) => filaLinea(id, x, sig && sig[0] === id)).join('') || '<li class="vacio it-vacio">¡Todo hecho! 🎉</li>'}</ol>`;
+      return;
+    }
     $('#it-lista').innerHTML = todos.length
       ? `<ul class="it-items">${vis.map(([id, x]) => fila(id, x)).join('') || '<li class="vacio it-vacio">¡Todo hecho! 🎉</li>'}</ul>`
       : '<p class="vacio">Todavía no hay momentos. Agrega el primero arriba o carga la plantilla de ejemplo.</p>';
@@ -144,6 +172,25 @@ export function iniciarItinerario({ db, esc, toast }) {
     guardar(() => update(ref(db, 'itinerario'), cambios), 'Horarios movidos');
   });
 
+  /* ---------- vaciar todo ---------- */
+  $('#it-vaciar').addEventListener('click', () => {
+    const n = Object.keys(st.items).length;
+    if (!n) { toast('El itinerario ya está vacío'); return; }
+    if (confirm(`¿Vaciar el itinerario? Se borrarán los ${n} momentos con sus canciones. No se puede deshacer.`)) {
+      st.editando = null;
+      guardar(() => remove(ref(db, 'itinerario')), 'Itinerario vaciado');
+    }
+  });
+
+  /* ---------- lista / línea del tiempo ---------- */
+  document.querySelector('#it-vistas').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-vista]');
+    if (!b) return;
+    st.vista = b.dataset.vista;
+    try { localStorage.setItem('itinVista', st.vista); } catch { /* sin almacenamiento */ }
+    pintar();
+  });
+
   $('#it-solo-pend').addEventListener('click', () => { st.soloPend = !st.soloPend; pintar(); });
 
   const textoCompartir = () => {
@@ -167,6 +214,7 @@ export function iniciarItinerario({ db, esc, toast }) {
     const b = e.target.closest('button[data-a]');
     if (!b) return;
     const { a, i } = b.dataset;
+    if (a === 'abrir') { st.vista = 'lista'; st.editando = i; pintar(); $('#it-lista').scrollIntoView({ block: 'start' }); return; }
     if (a === 'editar') { st.editando = i; pintar(); const inp = $(`[data-id="${CSS.escape(i)}"] input[name="momento"]`); if (inp) inp.focus(); }
     else if (a === 'cancelar') { st.editando = null; pintar(); }
     else if (a === 'quitar') {
