@@ -4,26 +4,22 @@ import {
   ref, onValue, set, update, remove, push,
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
 
-// Plantilla de ejemplo: la recepción arranca a las 6:30 PM. Las canciones las llenas tú.
+// Plantilla de ejemplo: la recepción arranca a las 6:30 PM (la misa y las entradas con los papás son aparte). Las canciones las llenas tú.
 const PLANTILLA = [
   ['18:30', 'Llegada de invitados', 'Música ambiental suave', 'Registro y que cada quien encuentre su mesa'],
-  ['19:15', 'Entrada de los papás del novio', '', ''],
-  ['19:20', 'Entrada de los papás de la novia', '', ''],
-  ['19:25', 'Entrada del novio con su mamá', '', ''],
-  ['19:30', 'Entrada de la novia con su papá', '', ''],
-  ['19:35', 'Entrada de los novios', '', ''],
-  ['19:40', 'Palabras de bienvenida', '', ''],
-  ['19:45', 'Brindis', '', ''],
-  ['19:55', 'Cena y banquete', 'Música ambiental', 'Los novios saludan mesa por mesa'],
-  ['20:45', 'Vals de los novios', '', ''],
-  ['20:55', 'Baile de la novia con su papá', '', ''],
-  ['21:00', 'Baile del novio con su mamá', '', ''],
-  ['21:05', 'Baile de los papás', '', ''],
-  ['21:15', 'Pastel', '', ''],
-  ['21:25', 'Ramo y liga', '', 'Opcional'],
-  ['21:35', 'Baile abierto', '', ''],
-  ['22:30', 'Hora loca', '', 'Opcional'],
-  ['23:30', 'Despedida', '', ''],
+  ['19:15', 'Entrada de los novios', '', ''],
+  ['19:20', 'Palabras de bienvenida', '', ''],
+  ['19:25', 'Brindis', '', ''],
+  ['19:35', 'Cena y banquete', 'Música ambiental', 'Los novios saludan mesa por mesa'],
+  ['20:25', 'Vals de los novios', '', ''],
+  ['20:35', 'Vals de la novia con su papá', '', ''],
+  ['20:40', 'Vals del novio con su mamá', '', ''],
+  ['20:45', 'Vals de los papás', '', ''],
+  ['20:55', 'Pastel', '', ''],
+  ['21:05', 'Ramo y liga', '', 'Opcional'],
+  ['21:15', 'Baile abierto', '', ''],
+  ['22:10', 'Hora loca', '', 'Opcional'],
+  ['23:10', 'Despedida', '', ''],
 ];
 
 export function iniciarItinerario({ db, esc, toast }) {
