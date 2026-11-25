@@ -24,8 +24,61 @@ const PLANTILLA = [
 
 export function iniciarItinerario({ db, esc, toast }) {
   const $ = (s, r = document) => r.querySelector(s);
-  const st = { items: {}, editando: null, soloPend: false, vista: 'lista' };
+  const st = { items: {}, soloPend: false, vista: 'lista' };
   try { if (localStorage.getItem('itinVista') === 'linea') st.vista = 'linea'; } catch { /* sin almacenamiento */ }
+
+  /* ---------- diálogo para editar un momento ---------- */
+  const dlg = document.createElement('dialog');
+  dlg.id = 'dlg-itin';
+  dlg.innerHTML = `
+    <form id="form-itin">
+      <h2>Editar momento</h2>
+      <div class="dos">
+        <label>Hora <input type="time" name="hora" required></label>
+        <label>Momento <input name="momento" maxlength="80" required autocomplete="off"></label>
+      </div>
+      <label>Canción (título y artista) <input name="cancion" maxlength="120" autocomplete="off"></label>
+      <label>Enlace de la canción (YouTube / Spotify) <input type="url" name="enlace" maxlength="300" placeholder="https://…" autocomplete="off"></label>
+      <label>Notas (quién lo hace, qué se necesita) <input name="notas" maxlength="160" autocomplete="off"></label>
+      <div class="dlg-botones">
+        <button type="button" class="b b-sec b-peligro" data-d="quitar"><i class="fa-solid fa-trash"></i> Quitar</button>
+        <button type="button" class="b b-sec" data-d="cancelar">Cancelar</button>
+        <button type="submit" class="b b-pri">Guardar</button>
+      </div>
+    </form>`;
+  document.body.appendChild(dlg);
+  const form = dlg.querySelector('form');
+  let editandoId = null;
+  const abrir = (id) => {
+    const x = st.items[id];
+    if (!x) return;
+    editandoId = id;
+    form.hora.value = x.hora || '';
+    form.momento.value = x.momento || '';
+    form.cancion.value = x.cancion || '';
+    form.enlace.value = x.enlace || '';
+    form.notas.value = x.notas || '';
+    dlg.showModal();
+    document.activeElement?.blur?.(); // sin teclado ni selector de hora al abrir
+  };
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); }); // tocar fuera cierra
+  dlg.querySelector('[data-d="cancelar"]').addEventListener('click', () => dlg.close());
+  dlg.querySelector('[data-d="quitar"]').addEventListener('click', () => {
+    const id = editandoId;
+    if (id && confirm(`¿Quitar "${st.items[id]?.momento}" del itinerario?`)) { dlg.close(); guardar(() => remove(ref(db, `itinerario/${id}`)), 'Momento quitado'); }
+  });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const momento = form.momento.value.trim();
+    if (!momento || !form.hora.value || !editandoId) return;
+    const v = (k, n) => form[k].value.trim().slice(0, n) || null; // vacío = se borra el campo
+    const enlace = v('enlace', 300);
+    const id = editandoId;
+    dlg.close();
+    guardar(() => update(ref(db, `itinerario/${id}`), {
+      hora: form.hora.value, momento: momento.slice(0, 80), cancion: v('cancion', 120), enlace: urlOk(enlace) ? enlace : null, notas: v('notas', 160),
+    }), 'Guardado');
+  });
 
   onValue(ref(db, 'itinerario'), (snap) => {
     st.items = snap.val() || {};
@@ -56,24 +109,6 @@ export function iniciarItinerario({ db, esc, toast }) {
   const urlOk = (u) => /^https?:\/\//i.test(u || '');
 
   function fila(id, x) {
-    if (st.editando === id) {
-      return `
-      <li class="it-item editando" data-id="${esc(id)}">
-        <form class="it-form" data-a="guardar-edicion" data-i="${esc(id)}">
-          <div class="it-campos">
-            <label>Hora<input type="time" name="hora" value="${esc(x.hora || '')}" required></label>
-            <label class="it-ancho">Momento<input name="momento" maxlength="80" value="${esc(x.momento)}" required autocomplete="off"></label>
-          </div>
-          <label>Canción (título y artista)<input name="cancion" maxlength="120" value="${esc(x.cancion || '')}" autocomplete="off"></label>
-          <label>Enlace de la canción (YouTube / Spotify, opcional)<input type="url" name="enlace" maxlength="300" value="${esc(x.enlace || '')}" placeholder="https://…" autocomplete="off"></label>
-          <label>Notas (quién lo hace, qué se necesita)<input name="notas" maxlength="160" value="${esc(x.notas || '')}" autocomplete="off"></label>
-          <div class="it-botones">
-            <button type="submit" class="b b-pri"><i class="fa-solid fa-check"></i> Guardar</button>
-            <button type="button" class="b b-sec" data-a="cancelar"><i class="fa-solid fa-xmark"></i> Cancelar</button>
-          </div>
-        </form>
-      </li>`;
-    }
     return `
       <li class="it-item ${x.hecho ? 'hecho' : ''}" data-id="${esc(id)}">
         <label class="it-check" title="Marcar como hecho">
@@ -177,7 +212,6 @@ export function iniciarItinerario({ db, esc, toast }) {
     const n = Object.keys(st.items).length;
     if (!n) { toast('El itinerario ya está vacío'); return; }
     if (confirm(`¿Vaciar el itinerario? Se borrarán los ${n} momentos con sus canciones. No se puede deshacer.`)) {
-      st.editando = null;
       guardar(() => remove(ref(db, 'itinerario')), 'Itinerario vaciado');
     }
   });
@@ -214,28 +248,7 @@ export function iniciarItinerario({ db, esc, toast }) {
     const b = e.target.closest('button[data-a]');
     if (!b) return;
     const { a, i } = b.dataset;
-    if (a === 'abrir') { st.vista = 'lista'; st.editando = i; pintar(); $('#it-lista').scrollIntoView({ block: 'start' }); return; }
-    if (a === 'editar') { st.editando = i; pintar(); const inp = $(`[data-id="${CSS.escape(i)}"] input[name="momento"]`); if (inp) inp.focus(); }
-    else if (a === 'cancelar') { st.editando = null; pintar(); }
-    else if (a === 'quitar') {
-      if (confirm(`¿Quitar "${st.items[i]?.momento}" del itinerario?`)) guardar(() => remove(ref(db, `itinerario/${i}`)));
-    }
-  });
-
-  $('#it-lista').addEventListener('submit', (e) => {
-    const f = e.target.closest('form[data-a="guardar-edicion"]');
-    if (!f) return;
-    e.preventDefault();
-    const momento = f.momento.value.trim();
-    if (!momento || !f.hora.value) return;
-    const v = (k, n) => f[k].value.trim().slice(0, n) || null; // vacío = se borra el campo
-    const enlace = v('enlace', 300);
-    guardar(async () => {
-      await update(ref(db, `itinerario/${f.dataset.i}`), {
-        hora: f.hora.value, momento: momento.slice(0, 80), cancion: v('cancion', 120), enlace: urlOk(enlace) ? enlace : null, notas: v('notas', 160),
-      });
-      st.editando = null;
-      pintar();
-    }, 'Guardado');
+    if (a === 'editar' || a === 'abrir') abrir(i);
+    else if (a === 'quitar' && confirm(`¿Quitar "${st.items[i]?.momento}" del itinerario?`)) guardar(() => remove(ref(db, `itinerario/${i}`)));
   });
 }
