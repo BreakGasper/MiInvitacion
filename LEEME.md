@@ -19,6 +19,7 @@ asistencia. Cada familia tiene su enlace personal (`?p=ID`) con sus lugares y la
 | Familias | Enviar invitaciones por WhatsApp, ver respuestas, editar lugares e integrantes, Excel. |
 | Mesas | Plano del salón con mesas y elementos que se arrastran, y acomodo de invitados por mesa. |
 | Gastos | Proveedores, pagos a proveedores, abonos de padrinos, cotizaciones y reparto de presupuesto (cerveza, refresco…). |
+| Itinerario | Programa de la boda hora por hora con la canción de cada momento (entradas, vals…). Plantilla de ejemplo, mover horarios, compartir por WhatsApp. |
 | Calcular | Lista de compras contra el efectivo disponible; cotizaciones guardadas, unir, editar y recibo por WhatsApp. |
 
 ## Archivos
@@ -27,7 +28,7 @@ asistencia. Cada familia tiene su enlace personal (`?p=ID`) con sus lugares y la
 |---|---|
 | `js/config.js` | **Todos los textos, fechas, lugares y fotos de la invitación.** |
 | `js/app.js`, `js/fb.js` | Invitación y su conexión con Firebase. |
-| `js/panel.js`, `js/mesas.js`, `js/gastos.js`, `js/calculadora.js` | Panel y cada una de sus pestañas. |
+| `js/panel.js`, `js/mesas.js`, `js/gastos.js`, `js/calculadora.js`, `js/itinerario.js` | Panel y cada una de sus pestañas. |
 | `css/estilos.css`, `css/panel.css` | Estilos de la invitación y del panel. |
 | `database.rules.json` | Reglas de seguridad: los invitados solo leen/escriben lo suyo; el resto es solo para administradores. |
 | `publicar/` | Lo que se sube a Hosting (copia de los archivos de arriba + `img/` + `musica/`). |

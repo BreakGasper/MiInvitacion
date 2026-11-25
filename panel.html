@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=MonteCarlo&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="css/panel.css?v=26">
+  <link rel="stylesheet" href="css/panel.css?v=27">
 </head>
 <body>
   <header class="barra">
@@ -54,6 +54,7 @@
       <button type="button" class="pestana" data-modo="calc"><i class="fa-solid fa-calculator"></i> Calcular</button>
       <button type="button" class="pestana" data-modo="fotos"><i class="fa-solid fa-camera"></i> Fotos</button>
       <button type="button" class="pestana" data-modo="pend"><i class="fa-solid fa-list-check"></i> Pendientes</button>
+      <button type="button" class="pestana" data-modo="itin"><i class="fa-solid fa-clock"></i> Itinerario</button>
     </nav>
 
     <!-- ============ PENDIENTES: listas de cosas por hacer ============ -->
@@ -73,6 +74,33 @@
         </div>
       </section>
       <div id="pend-listas"></div>
+    </div>
+
+    <!-- ============ ITINERARIO: programa de la boda con la canción de cada momento ============ -->
+    <div data-solo="itin" hidden>
+      <section class="resumen" id="it-resumen"></section>
+      <section class="caja">
+        <div class="mesas-barra">
+          <h2 class="caja-t">Itinerario de la boda</h2>
+          <div class="acciones">
+            <button type="button" class="b b-sec" id="it-plantilla"><i class="fa-solid fa-wand-magic-sparkles"></i> Plantilla</button>
+            <button type="button" class="b b-sec" id="it-mover"><i class="fa-solid fa-arrows-left-right"></i> Mover horarios</button>
+            <button type="button" class="b b-sec" id="it-compartir"><i class="fa-brands fa-whatsapp"></i> Compartir</button>
+          </div>
+        </div>
+        <p class="ayuda">Agrega cada momento con su hora y su canción (entradas de los papás, vals, brindis…). Se ordena solo por hora. Toca ✏️ para añadir enlace y notas, y marca ✔ lo que ya pasó.</p>
+        <form class="it-nuevo" id="it-nuevo">
+          <input type="time" name="hora" value="18:30" required aria-label="Hora">
+          <input name="momento" maxlength="80" placeholder="Momento (ej. Vals de los novios)" required aria-label="Momento" autocomplete="off">
+          <input name="cancion" maxlength="120" placeholder="Canción (opcional)" aria-label="Canción" autocomplete="off">
+          <button type="submit" class="b b-pri" aria-label="Agregar momento"><i class="fa-solid fa-plus"></i><span class="pd-btn-t"> Agregar</span></button>
+        </form>
+        <div class="filtros">
+          <button type="button" class="chip" id="it-solo-pend">Ver solo lo que falta</button>
+          <span class="it-sig" id="it-siguiente"></span>
+        </div>
+      </section>
+      <section class="caja" id="it-lista"></section>
     </div>
 
     <!-- ============ CALCULADORA: lista de compras contra el efectivo disponible ============ -->
@@ -459,6 +487,6 @@
   <div class="toast" id="toast" role="status" hidden></div>
 
   <script src="js/config.js?v=13"></script>
-  <script type="module" src="js/panel.js?v=25"></script>
+  <script type="module" src="js/panel.js?v=26"></script>
 </body>
 </html>
