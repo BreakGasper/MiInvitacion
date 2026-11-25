@@ -11,7 +11,7 @@ import { iniciarGastos } from './gastos.js?v=2';
 import { iniciarCalculadora } from './calculadora.js?v=7';
 import { iniciarFotos } from './fotos.js?v=1';
 import { iniciarPendientes } from './pendientes.js?v=2';
-import { iniciarItinerario } from './itinerario.js?v=3';
+import { iniciarItinerario } from './itinerario.js?v=5';
 import { iniciarJalarParaActualizar } from './jalar.js?v=1';
 
 iniciarJalarParaActualizar();

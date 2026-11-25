@@ -14,6 +14,7 @@
   --pend-f: #fbf1dc;
 }
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: manipulation; } /* sin zoom por doble toque */
 body { margin: 0; background: var(--fondo); color: var(--texto); font: 15px/1.45 'Outfit', system-ui, sans-serif; }
 [hidden] { display: none !important; }
 button { font: inherit; cursor: pointer; }
@@ -410,7 +411,11 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
 .it-nuevo { display: grid; grid-template-columns: 130px 1fr 1fr auto; gap: 8px; margin-top: 12px; }
 .it-nuevo input, .it-form input { font-size: 16px; padding: 11px 12px; border: 1px solid var(--linea); border-radius: 10px; font-family: inherit; color: var(--texto); min-width: 0; width: 100%; box-sizing: border-box; }
 .it-nuevo .b { justify-content: center; min-width: 44px; }
-.it-sig { font-size: 13px; color: var(--suave); align-self: center; }
+.it-sig { font-size: 13px; color: var(--suave); }
+.it-vistas { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.it-vistas .chip { padding: 9px 12px; font-size: 14px; text-align: center; }
+.it-extra { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; }
+.it-extra .chip { padding: 7px 12px; }
 .it-items { list-style: none; margin: 0; padding: 0; }
 .it-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--linea); }
 .it-item:last-child { border-bottom: 0; }
@@ -453,8 +458,18 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
   .tl-punto { width: 32px; height: 32px; }
 }
 @media (max-width: 560px) {
-  .it-nuevo { grid-template-columns: 1fr 1fr; }
-  .it-nuevo input[name="momento"], .it-nuevo input[name="cancion"] { grid-column: 1 / -1; }
+  .it-nuevo { grid-template-columns: 1fr 1fr; grid-template-areas: 'hora boton' 'momento momento' 'cancion cancion'; }
+  .it-nuevo input[name="hora"] { grid-area: hora; }
+  .it-nuevo input[name="momento"] { grid-area: momento; }
+  .it-nuevo input[name="cancion"] { grid-area: cancion; }
+  .it-nuevo .b { grid-area: boton; }
+  .it-acciones { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+  .it-acciones .b { justify-content: center; }
+  .mesas-barra:has(.it-acciones) { display: grid; }
+  #dlg-itin .dos { grid-template-columns: 1fr; }
+  #dlg-itin .dlg-botones { display: grid; grid-template-columns: 1fr 1fr; }
+  #dlg-itin .dlg-botones .b { justify-content: center; }
+  #dlg-itin .dlg-botones [data-d="quitar"] { grid-column: 1 / -1; }
   .it-hora { width: 62px; font-size: 13px; }
   .it-campos { grid-template-columns: 1fr; }
 }
@@ -480,3 +495,10 @@ dialog.ancho label input, dialog.ancho label select, dialog.ancho label textarea
 .jala.listo, .jala.cargando { color: var(--oro); }
 .jala.listo i { transform: rotate(180deg); }
 .jala i { transition: transform .15s; }
+
+/* ============ SIN ZOOM EN EL CELULAR ============ */
+/* iPhone hace zoom al tocar un campo con letra menor a 16px: aquí todos miden 16px para que la pantalla no se mueva */
+@media (max-width: 820px) {
+  input, select, textarea { font-size: 16px !important; }
+  body { overflow-x: hidden; }
+}
