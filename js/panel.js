@@ -11,6 +11,7 @@ import { iniciarGastos } from './gastos.js?v=2';
 import { iniciarCalculadora } from './calculadora.js?v=7';
 import { iniciarFotos } from './fotos.js?v=1';
 import { iniciarPendientes } from './pendientes.js?v=2';
+import { iniciarItinerario } from './itinerario.js?v=1';
 
 const C = window.INVITACION;
 const app = initializeApp(C.firebase);
@@ -133,7 +134,7 @@ onAuthStateChanged(auth, (u) => {
       if (cargados.size === NODOS.length) {
         pintar();
         vista('panel');
-        if (!st.mesasListas) { st.mesasListas = true; iniciarMesas({ db, esc, toast }); iniciarGastos({ db, esc, toast }); iniciarCalculadora({ db, esc, toast }); iniciarFotos({ db, esc, toast }); iniciarPendientes({ db, esc, toast }); }
+        if (!st.mesasListas) { st.mesasListas = true; iniciarMesas({ db, esc, toast }); iniciarGastos({ db, esc, toast }); iniciarCalculadora({ db, esc, toast }); iniciarFotos({ db, esc, toast }); iniciarPendientes({ db, esc, toast }); iniciarItinerario({ db, esc, toast }); }
       }
     }, () => {
       $('#login-error').textContent = `La cuenta ${u.email} no tiene permiso para ver este panel.`;
@@ -144,7 +145,7 @@ onAuthStateChanged(auth, (u) => {
 
 /* ---------- pintar ---------- */
 function pintar() {
-  if (['mesas', 'gastos', 'calc', 'fotos', 'pend'].includes(st.modo)) return;
+  if (['mesas', 'gastos', 'calc', 'fotos', 'pend', 'itin'].includes(st.modo)) return;
   if (st.modo === 'gen') { pintarRegistros(); return; }
   const ids = Object.keys(st.invitados);
   const activos = ids.filter((id) => !cancelado(st.invitados[id]));
